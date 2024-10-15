@@ -3,32 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atomic Marker Font Test</title>
-    <!-- Importing the Atomic Marker font from GitHub raw link -->
+    <title>Popcorn - BlockWave Network</title>
+
+    <!-- Importing Atomic Marker and Afacad Flux Fonts -->
     <style>
         @font-face {
             font-family: 'Atomic Marker';
             src: url('https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/set-sail-studios-atomic-marker-regular.otf') format('opentype');
         }
-        body {
-            font-family: 'Atomic Marker', sans-serif;
+
+        @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux&display=swap');
+
+        /* Basic Reset */
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Afacad Flux', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Top Bar Styling */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to bottom, black, transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .top-bar h1 {
+            font-family: 'Atomic Marker', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        /* Fullscreen Video */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* Content Overlay */
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
+            color: white;
+            z-index: 2;
         }
-        h1 {
+
+        .content h2 {
+            font-family: 'Atomic Marker', sans-serif;
             font-size: 3rem;
-            color: #333;
         }
-        p {
+
+        .content p {
+            font-family: 'Afacad Flux', sans-serif;
             font-size: 1.5rem;
-            color: #555;
+            margin-top: 20px;
+        }
+
+        /* Button Styling */
+        .content .btn {
+            display: inline-block;
+            font-family: 'Afacad Flux', sans-serif;
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: black;
+            border: 2px solid white;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 15px; /* Rounded corners */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+        }
+
+        .content .btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        /* Footer Styling */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
+            z-index: 2;
+        }
+
+        footer h1 {
+            font-family: 'Atomic Marker', sans-serif;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        footer p {
+            font-family: 'Afacad Flux', sans-serif;
+            color: white;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <h1>Font Test</h1>
-    <p>This text is displayed using the Atomic Marker font!</p>
+
+    <!-- Video Background -->
+    <video class="video-background" autoplay loop muted>
+        <source src="https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/2792370-hd_1920_1080_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <h1>Popcorn</h1>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content">
+        <h2>Reclaim the power of gaming</h2>
+        <p>The BlockWave network allows for gaming without boundaries.</p>
+        <a href="netv.html" class="btn">Connect to network</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h1>Popcorn</h1>
+        <p>© 2024 SnipeCo. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
