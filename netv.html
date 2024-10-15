@@ -48,7 +48,8 @@
             button.innerText = "Connect to network";
             button.className = "btn";
             button.onclick = function() {
-                window.open("/website-data/prx-177/authbot-1/popcorn-security/nginx.html", "_blank");
+                const newWindow = window.open('about:blank', '_blank'); // Open a new blank tab
+                newWindow.location.href = "/website-data/prx-177/authbot-1/popcorn-security/nginx.html"; // Redirect to the specified URL
             };
             document.body.appendChild(button);
         } else {
