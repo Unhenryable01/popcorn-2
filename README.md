@@ -1,5 +1,6 @@
 # SnipePoetry Popcorn
-How to login to the network?
-On OFFICIAL instances, the username and password is:
-USER = "public"
-PASW = "1234"
+How to login to the network?</br>
+Official instance logins can be found on the WhatsApp Channel!</br>
+If your not in it, here is a public key:</br>
+- "public" - USER
+- "1234" - PASW
