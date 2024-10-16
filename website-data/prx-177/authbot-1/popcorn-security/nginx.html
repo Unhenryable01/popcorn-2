@@ -1,1 +1,212 @@
-e
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about:blank</title> <!-- Set the title to 'about:blank' -->
+
+    <!-- Removing favicon -->
+    <link rel="icon" href="about:blank"> <!-- This sets the favicon to an invisible 'about:blank' -->
+
+    <!-- Importing Atomic Marker and Afacad Flux Fonts -->
+    <style>
+        @font-face {
+            font-family: 'Atomic Marker';
+            src: url('https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/set-sail-studios-atomic-marker-regular.otf') format('opentype');
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux&display=swap');
+
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Afacad Flux', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Top Bar Styling */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to bottom, black, transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .top-bar h1 {
+            font-family: 'Atomic Marker', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100% - 120px); /* Adjust for footer and top bar */
+            padding-top: 80px; /* Space below the top bar */
+        }
+
+        /* Rounded Box */
+        .rounded-box {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Atomic Marker', sans-serif;
+            font-size: 1.8rem;
+        }
+
+        /* Best Games Text */
+        .best-games {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: black;
+        }
+
+        /* Game Tiles */
+        .game-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .tile {
+            background-image: url('https://png.pngtree.com/png-clipart/20220111/original/pngtree-popcorn-png-image_7085531.png');
+            background-size: cover;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Atomic Marker', sans-serif;
+            font-size: 1.5rem;
+            border-radius: 15px; /* Rounded corners */
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tile.eaglercraft {
+            background-color: black; /* Different background for Eaglercraft tile */
+        }
+
+        /* Footer Styling */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
+            z-index: 2;
+        }
+
+        footer h1 {
+            font-family: 'Atomic Marker', sans-serif;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        footer p {
+            font-family: 'Afacad Flux', sans-serif;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* Hidden iframe */
+        #game-frame {
+            display: none; /* Keep iframe hidden until a game is loaded */
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <h1>Popcorn</h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="rounded-box">SnipeAds coming soon...</div>
+        <div class="best-games">Best games</div>
+
+        <!-- Game Tiles -->
+        <div class="game-tiles">
+            <div class="tile">Popcorn</div>
+            <div class="tile">Popcorn</div>
+            <div class="tile">Popcorn</div>
+            <div class="tile">Popcorn</div>
+            <div class="tile eaglercraft" onclick="loadEaglercraft()">Eaglercraft</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <h1>Popcorn</h1>
+        <p>© 2024 SnipeCo. All rights reserved.</p>
+    </footer>
+
+    <!-- Hidden Iframe for Running Games -->
+    <iframe id="game-frame"></iframe>
+
+    <script>
+        // Function to restrict access to Chrome only
+        function checkBrowser() {
+            const ua = navigator.userAgent;
+            const isChrome = ua.includes("Chrome") && !ua.includes("Chromium") && !ua.includes("Edg");
+
+            if (!isChrome) {
+                alert("This site is only accessible using Google Chrome.");
+                window.location.href = "https://www.google.com/chrome/";
+            }
+        }
+
+        // Function to load Eaglercraft code from GitLab into the iframe
+        function loadEaglercraft() {
+            const iframe = document.getElementById('game-frame');
+            iframe.src = 'https://gitlab.com/MrInc0gnito/eaglerunblocked/-/raw/main/crafter.html?ref_type=heads';
+            iframe.style.display = 'block'; // Show the iframe when a game is loaded
+        }
+
+        // Check if the browser is Chrome
+        checkBrowser();
+
+        // Function to check referrer and allow page load only from '/netv.html'
+        function checkReferrer() {
+            const referrer = document.referrer;
+            if (!referrer.includes("/netv.html")) {
+                alert("Access denied. Please navigate from the correct page.");
+                window.location.href = "/netv.html"; // Redirect to the login page
+            }
+        }
+
+        // Run the referrer check
+        checkReferrer();
+    </script>
+
+</body>
+</html>
