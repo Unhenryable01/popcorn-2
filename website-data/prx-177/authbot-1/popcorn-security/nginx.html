@@ -30,6 +30,17 @@
             overflow: hidden;
         }
 
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover; /* Makes sure the video covers the entire background */
+        }
+
         /* Top Bar Styling */
         .top-bar {
             position: fixed;
@@ -57,6 +68,7 @@
             justify-content: center;
             height: calc(100% - 120px); /* Adjust for footer and top bar */
             padding-top: 80px; /* Space below the top bar */
+            z-index: 1;
         }
 
         /* Rounded Box */
@@ -75,7 +87,7 @@
         .best-games {
             font-size: 1.5rem;
             margin: 20px 0;
-            color: black;
+            color: white;
         }
 
         /* Game Tiles */
@@ -143,6 +155,12 @@
     </style>
 </head>
 <body>
+
+    <!-- Video Background -->
+    <video class="video-background" autoplay muted loop>
+        <source src="https://github.com/MrInc0gnito/snipepoetry-popcorn/blob/main/854959-hd_1920_1080_30fps.mp4?raw=true" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
     <!-- Top Bar -->
     <div class="top-bar">
