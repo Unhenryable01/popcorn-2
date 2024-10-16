@@ -87,7 +87,7 @@
         .best-games {
             font-size: 1.5rem;
             margin: 20px 0;
-            color: white;
+            color: black; /* Changed text color to black */
         }
 
         /* Game Tiles */
@@ -116,7 +116,7 @@
         }
 
         .tile.eaglercraft {
-            background-color: black; /* Different background for Eaglercraft tile */
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8jBmwuWnaEQkYi5UJnlgTLpq6X87X8biMdA&s'); /* Eaglercraft button image updated */
         }
 
         /* Footer Styling */
@@ -140,17 +140,6 @@
             font-family: 'Afacad Flux', sans-serif;
             color: white;
             font-size: 0.9rem;
-        }
-
-        /* Hidden iframe */
-        #game-frame {
-            display: none; /* Keep iframe hidden until a game is loaded */
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            border: none;
         }
     </style>
 </head>
@@ -178,7 +167,7 @@
             <div class="tile">Popcorn</div>
             <div class="tile">Popcorn</div>
             <div class="tile">Popcorn</div>
-            <div class="tile eaglercraft" onclick="loadEaglercraft()">Eaglercraft</div>
+            <div class="tile eaglercraft" onclick="openEaglercraft()">Eaglercraft</div>
         </div>
     </div>
 
@@ -187,9 +176,6 @@
         <h1>Popcorn</h1>
         <p>© 2024 SnipeCo. All rights reserved.</p>
     </footer>
-
-    <!-- Hidden Iframe for Running Games -->
-    <iframe id="game-frame"></iframe>
 
     <script>
         // Function to restrict access to Chrome only
@@ -203,11 +189,9 @@
             }
         }
 
-        // Function to load Eaglercraft code from GitLab into the iframe
-        function loadEaglercraft() {
-            const iframe = document.getElementById('game-frame');
-            iframe.src = 'https://gitlab.com/MrInc0gnito/eaglerunblocked/-/raw/main/crafter.html?ref_type=heads';
-            iframe.style.display = 'block'; // Show the iframe when a game is loaded
+        // Function to open Eaglercraft in a new tab
+        function openEaglercraft() {
+            window.open('https://math-lessons.vercel.app/test.html', '_blank');
         }
 
         // Check if the browser is Chrome
