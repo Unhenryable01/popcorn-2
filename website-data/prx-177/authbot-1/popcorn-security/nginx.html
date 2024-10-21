@@ -140,6 +140,10 @@
             color: white;
             font-size: 0.9rem;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -162,11 +166,9 @@
 
         <!-- Game Tiles -->
         <div class="game-tiles">
-            <div class="tile">Popcorn</div>
-            <div class="tile">Popcorn</div>
-            <div class="tile blockwave" onclick="openBlockwaveGallery()">BlockWave</div>
-            <div class="tile radar-client" onclick="openRadarClient()">Radar Client</div> <!-- Radar Client Tile -->
-            <div class="tile eaglercraft" onclick="openEaglercraft()">Eaglercraft</div>
+            <div class="tile eaglercraft hidden" id="eaglercraft" onclick="openEaglercraft()">Eaglercraft</div>
+            <div class="tile blockwave hidden" id="blockwave" onclick="openBlockwaveGallery()">BlockWave</div>
+            <div class="tile radar-client hidden" id="radarclient" onclick="openRadarClient()">Radar Client</div>
         </div>
     </div>
 
@@ -199,7 +201,34 @@
             window.open('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html', '_blank');
         }
 
+        function checkLicenseKey() {
+            const licenseKey = prompt("Enter your License Key");
+
+            // Hide all game tiles first
+            document.getElementById('eaglercraft').classList.add('hidden');
+            document.getElementById('blockwave').classList.add('hidden');
+            document.getElementById('radarclient').classList.add('hidden');
+
+            if (licenseKey === "1x77") {
+                // Show Eaglercraft and Radar Client only
+                document.getElementById('eaglercraft').classList.remove('hidden');
+                document.getElementById('radarclient').classList.remove('hidden');
+            } else if (licenseKey === "theblockwavekey") {
+                // Show BlockWave only
+                document.getElementById('blockwave').classList.remove('hidden');
+            } else if (licenseKey === "nitrosgamerguild") {
+                // Show all games
+                document.getElementById('eaglercraft').classList.remove('hidden');
+                document.getElementById('blockwave').classList.remove('hidden');
+                document.getElementById('radarclient').classList.remove('hidden');
+            } else {
+                alert("Invalid License Key. Access Denied.");
+                window.location.href = "/netv.html"; // Redirect if invalid key
+            }
+        }
+
         checkBrowser();
+        checkLicenseKey();
 
         function checkReferrer() {
             const referrer = document.referrer;
