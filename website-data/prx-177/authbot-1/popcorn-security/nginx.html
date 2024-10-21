@@ -115,6 +115,10 @@
             background-image: url('https://ik.imagekit.io/vibemap/original_images_image_Hmq9NkBa0.jpg?refresh=10/29/2024%2012:00:00%20AM');
         }
 
+        .tile.radar-client {
+            background-image: url('https://i.ytimg.com/vi/fGywoioEoX0/maxresdefault.jpg');
+        }
+
         footer {
             position: fixed;
             bottom: 0;
@@ -160,8 +164,8 @@
         <div class="game-tiles">
             <div class="tile">Popcorn</div>
             <div class="tile">Popcorn</div>
-            <div class="tile blockwave" onclick="openBlockwaveGallery()">BlockWave</div> <!-- BlockWave Tile -->
-            <div class="tile">Popcorn</div>
+            <div class="tile blockwave" onclick="openBlockwaveGallery()">BlockWave</div>
+            <div class="tile radar-client" onclick="openRadarClient()">Radar Client</div> <!-- Radar Client Tile -->
             <div class="tile eaglercraft" onclick="openEaglercraft()">Eaglercraft</div>
         </div>
     </div>
@@ -189,6 +193,10 @@
 
         function openBlockwaveGallery() {
             window.open('https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md', '_blank');
+        }
+
+        function openRadarClient() {
+            window.open('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html', '_blank');
         }
 
         checkBrowser();
