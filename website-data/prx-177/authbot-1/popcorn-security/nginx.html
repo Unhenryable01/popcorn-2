@@ -8,7 +8,6 @@
     <!-- Removing favicon -->
     <link rel="icon" href="about:blank">
 
-    <!-- Importing Atomic Marker and Afacad Flux Fonts -->
     <style>
         @font-face {
             font-family: 'Atomic Marker';
@@ -119,6 +118,14 @@
             background-image: url('https://i.ytimg.com/vi/fGywoioEoX0/maxresdefault.jpg');
         }
 
+        .tile.audio-player {
+            background-image: url('https://website-assets.commoninja.com/audio-player/og.png');
+        }
+
+        .tile.snipe-uncensor {
+            background-image: url('https://base-prod.rspb-prod.magnolia-platform.com/dam/jcr:8b40b10a-c66d-4067-b5df-fe1d3cb31f7c/1614653728-Species-Snipe-stood-on-post.jpg');
+        }
+
         footer {
             position: fixed;
             bottom: 0;
@@ -143,6 +150,94 @@
 
         .hidden {
             display: none;
+        }
+
+        /* Card Styles */
+        .card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 320px;
+            border-radius: 24px;
+            line-height: 1.6;
+            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 36px;
+            border-radius: 22px;
+            color: #ffffff;
+            overflow: hidden;
+            background: #0a3cff;
+            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .content::before {
+            position: absolute;
+            content: "";
+            top: -4%;
+            left: 50%;
+            width: 90%;
+            height: 90%;
+            transform: translate(-50%);
+            background: #ced8ff;
+            z-index: -1;
+            transform-origin: bottom;
+            border-radius: inherit;
+            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .content::after {
+            position: absolute;
+            content: "";
+            top: -8%;
+            left: 50%;
+            width: 80%;
+            height: 80%;
+            transform: translate(-50%);
+            background: #e7ecff;
+            z-index: -2;
+            transform-origin: bottom;
+            border-radius: inherit;
+            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .content svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .content .para {
+            z-index: 1;
+            opacity: 1;
+            font-size: 12px; /* Adjusted font size */
+            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+            position: absolute; /* Changed position to absolute */
+            bottom: 10px; /* Positioning it to the bottom right */
+            right: 10px; /* Positioning it to the bottom right */
+        }
+
+        .card:hover {
+            transform: translate(0px, -16px);
+        }
+
+        .card:hover .content::before {
+            rotate: -8deg;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .card:hover .content::after {
+            rotate: 8deg;
+            top: 0;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -169,77 +264,101 @@
             <div class="tile eaglercraft hidden" id="eaglercraft" onclick="openEaglercraft()">Eaglercraft</div>
             <div class="tile blockwave hidden" id="blockwave" onclick="openBlockwaveGallery()">BlockWave</div>
             <div class="tile radar-client hidden" id="radarclient" onclick="openRadarClient()">Radar Client</div>
+            <div class="tile audio-player hidden" id="audioPlayer" onclick="openAudioPlayer()">Audio Player</div>
+            <div class="tile snipe-uncensor hidden" id="snipeuncensor" onclick="openSnipeUncensor()">SnipeUncensor</div>
+        </div>
+
+        <!-- Hidden Card -->
+        <div class="card">
+            <div class="content">
+                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 9V5H4V9H20ZM20 11H4V19H20V11ZM3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2 3 3 3ZM5 12H8V17H5V12ZM5 6H7V8H5V6ZM9 6H11V8H9V6Z"></path>
+                </svg>
+                <p class="para">There are no current SnipePoetry Events on right now! Please wait or check out the Whatsapp Channel!</p>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
         <h1>Popcorn</h1>
-        <p>© 2024 SnipeCo. All rights reserved.</p>
+        <p>Made with ❤ by SnipeCo. 🍀</p>
     </footer>
 
     <script>
-        function checkBrowser() {
-            const ua = navigator.userAgent;
-            const isChrome = ua.includes("Chrome") && !ua.includes("Chromium") && !ua.includes("Edg");
-
-            if (!isChrome) {
-                alert("This site is only accessible using Google Chrome.");
-                window.location.href = "https://www.google.com/chrome/";
-            }
-        }
-
-        function openEaglercraft() {
-            window.open('https://math-lessons.vercel.app/test.html', '_blank');
-        }
-
-        function openBlockwaveGallery() {
-            window.open('https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md', '_blank');
-        }
-
-        function openRadarClient() {
-            window.open('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html', '_blank');
-        }
-
+        // Function to handle license key input
         function checkLicenseKey() {
-            const licenseKey = prompt("Enter your License Key");
+            const key = prompt("License Key");
 
-            // Hide all game tiles first
-            document.getElementById('eaglercraft').classList.add('hidden');
-            document.getElementById('blockwave').classList.add('hidden');
-            document.getElementById('radarclient').classList.add('hidden');
+            const games = {
+                "1x77": ["eaglercraft", "radarclient"],
+                "theblockwavekey": ["blockwave"],
+                "nitrosgamerguild": ["eaglercraft", "radarclient", "blockwave", "audioPlayer", "snipeuncensor"]
+            };
 
-            if (licenseKey === "1x77") {
-                // Show Eaglercraft and Radar Client only
-                document.getElementById('eaglercraft').classList.remove('hidden');
-                document.getElementById('radarclient').classList.remove('hidden');
-            } else if (licenseKey === "theblockwavekey") {
-                // Show BlockWave only
-                document.getElementById('blockwave').classList.remove('hidden');
-            } else if (licenseKey === "nitrosgamerguild") {
-                // Show all games
-                document.getElementById('eaglercraft').classList.remove('hidden');
-                document.getElementById('blockwave').classList.remove('hidden');
-                document.getElementById('radarclient').classList.remove('hidden');
+            const selectedGames = games[key];
+
+            if (selectedGames) {
+                selectedGames.forEach(game => {
+                    document.getElementById(game).classList.remove('hidden');
+                });
             } else {
-                alert("Invalid License Key. Access Denied.");
-                window.location.href = "/netv.html"; // Redirect if invalid key
+                alert("Invalid license key.");
+                window.location.href = "about:blank"; // Redirect to about:blank if invalid
             }
         }
 
-        checkBrowser();
-        checkLicenseKey();
+        // Function to open Eaglercraft
+        function openEaglercraft() {
+            window.open("https://math-lessons.vercel.app/test.html", "_blank");
+        }
 
+        // Function to open BlockWave Gallery
+        function openBlockwaveGallery() {
+            window.open("https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md", "_blank");
+        }
+
+        // Function to open Radar Client
+        function openRadarClient() {
+            window.open("https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html", "_blank");
+        }
+
+        // Function to open Audio Player
+        function openAudioPlayer() {
+            window.open("https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html", "_blank");
+        }
+
+        // Function to open SnipeUncensor
+        function openSnipeUncensor() {
+            window.open("https://snipeuncensor.yaha.buzz/", "_blank");
+        }
+
+        // Function to check if user is on Chrome
+        function isChrome() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return userAgent.indexOf('chrome') > -1 && userAgent.indexOf('edge') === -1;
+        }
+
+        // Function to check the last page was /netv.html
         function checkReferrer() {
             const referrer = document.referrer;
-            if (!referrer.includes("/netv.html")) {
-                alert("Access denied. Please navigate from the correct page.");
-                window.location.href = "/netv.html";
-            }
+            return referrer.includes("/netv.html");
         }
 
-        checkReferrer();
-    </script>
+        // Run the checks on page load
+        window.onload = function() {
+            if (!isChrome()) {
+                alert("This page can only be viewed on Chrome.");
+                window.location.href = "about:blank";
+            }
 
+            if (!checkReferrer()) {
+                alert("You must visit /netv.html first.");
+                window.location.href = "about:blank";
+            }
+
+            checkLicenseKey();
+        };
+    </script>
 </body>
 </html>
