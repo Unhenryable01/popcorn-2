@@ -239,4 +239,20 @@
         }
 
         // Run the checks on page load
-        window.onload
+        window.onload = function() {
+            if (!checkReferrer()) {
+                alert("You must visit /netv.html first.");
+                window.location.href = "about:blank";
+                return;
+            }
+
+            checkLicenseKey(); // Prompt for license key
+
+            if (!isChrome()) {
+                alert("This page can only be viewed on Chrome.");
+                window.location.href = "about:blank";
+            }
+        };
+    </script>
+</body>
+</html>
