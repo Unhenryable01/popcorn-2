@@ -9,10 +9,156 @@
     <link rel="icon" href="about:blank">
 
     <style>
-        /* Same styles as before */
+        @font-face {
+            font-family: 'Atomic Marker';
+            src: url('https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/set-sail-studios-atomic-marker-regular.otf') format('opentype');
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Afacad Flux', sans-serif;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to bottom, black, transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .top-bar h1 {
+            font-family: 'Atomic Marker', sans-serif;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100% - 120px);
+            padding-top: 80px;
+            z-index: 1;
+        }
+
+        .rounded-box {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Atomic Marker', sans-serif;
+            font-size: 1.8rem;
+        }
+
+        .best-games {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: black;
+        }
+
+        .game-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .tile {
+            background-size: cover;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Atomic Marker', sans-serif;
+            font-size: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tile.eaglercraft {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8jBmwuWnaEQkYi5UJnlgTLpq6X87X8biMdA&s');
+        }
+
+        .tile.blockwave {
+            background-image: url('https://ik.imagekit.io/vibemap/original_images_image_Hmq9NkBa0.jpg?refresh=10/29/2024%2012:00:00%20AM');
+        }
+
+        .tile.radar-client {
+            background-image: url('https://i.ytimg.com/vi/fGywoioEoX0/maxresdefault.jpg');
+        }
+
+        .tile.audio-player {
+            background-image: url('https://website-assets.commoninja.com/audio-player/og.png');
+        }
+
+        .tile.snipe-uncensor {
+            background-image: url('https://base-prod.rspb-prod.magnolia-platform.com/dam/jcr:8b40b10a-c66d-4067-b5df-fe1d3cb31f7c/1614653728-Species-Snipe-stood-on-post.jpg');
+        }
+
+        .tile.repo {
+            background-image: url('https://www.20i.com/blog/wp-content/uploads/2022/08/git-blog-header.png');
+            background-size: cover;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
+            z-index: 2;
+        }
+
+        footer h1 {
+            font-family: 'Atomic Marker', sans-serif;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        footer p {
+            font-family: 'Afacad Flux', sans-serif;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
-<body id="body">
+<body>
 
     <!-- Video Background -->
     <video class="video-background" autoplay muted loop>
@@ -32,14 +178,14 @@
 
         <!-- Game Tiles -->
         <div class="game-tiles">
-            <div class="tile eaglercraft hidden" id="eaglercraft" onclick="openGameInIframe('https://math-lessons.vercel.app/test.html')">Eaglercraft</div>
-            <div class="tile blockwave hidden" id="blockwave" onclick="openGameInIframe('https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md')">BlockWave</div>
-            <div class="tile radar-client hidden" id="radarclient" onclick="openGameInIframe('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html')">Radar Client</div>
-            <div class="tile audio-player hidden" id="audioPlayer" onclick="openGameInIframe('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html')">Audio Player</div>
-            <div class="tile snipe-uncensor hidden" id="snipeuncensor" onclick="openGameInIframe('https://snipeuncensor.yaha.buzz/')">SnipeUncensor</div>
+            <div class="tile eaglercraft hidden" id="eaglercraft" onclick="openGameInNewTab('https://math-lessons.vercel.app/test.html')">Eaglercraft</div>
+            <div class="tile blockwave hidden" id="blockwave" onclick="openGameInNewTab('https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md')">BlockWave</div>
+            <div class="tile radar-client hidden" id="radarclient" onclick="openGameInNewTab('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html')">Radar Client</div>
+            <div class="tile audio-player hidden" id="audioPlayer" onclick="openGameInNewTab('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html')">Audio Player</div>
+            <div class="tile snipe-uncensor hidden" id="snipeuncensor" onclick="openGameInNewTab('https://snipeuncensor.yaha.buzz/')">SnipeUncensor</div>
 
             <!-- "Open Repo" button for all tiers -->
-            <div class="tile repo" onclick="openGameInIframe('/repoimport.html')">Open Repo</div>
+            <div class="tile repo" onclick="openGameInNewTab('/repoimport.html')">Open Repo</div>
         </div>
     </div>
 
@@ -74,30 +220,9 @@
             }
         }
 
-        // Function to open the game in a new about:blank page with iframe
-        function openGameInIframe(url) {
-            const newWindow = window.open("about:blank", "_blank");
-            const iframe = newWindow.document.createElement('iframe');
-            iframe.src = url;
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "none";
-            newWindow.document.body.appendChild(iframe);
-
-            // Add keyboard input enablement for iframe
-            const script = newWindow.document.createElement('script');
-            script.innerHTML = `
-                function handleMouseDown(evt) {
-                    window.focus();   
-                    evt.preventDefault();  
-                    evt.stopPropagation();  
-                    evt.target.style.cursor = 'default';  
-                }  
-                document.getElementById('body').addEventListener('mousedown', handleMouseDown, false);
-            `;
-            newWindow.document.body.appendChild(script);
-
-            // Replace the current page with /ms.html
+        // Function to open the game in a new about:blank page and replace current page
+        function openGameInNewTab(url) {
+            window.open("about:blank", "_blank").location.href = url;
             window.location.replace("/ms.html");
         }
 
@@ -114,19 +239,4 @@
         }
 
         // Run the checks on page load
-        window.onload = function() {
-            if (!checkReferrer()) {
-                alert("You must visit /netv.html first.");
-                window.location.href = "about:blank";
-            }
-
-            checkLicenseKey();
-
-            if (!isChrome()) {
-                alert("This page can only be viewed on Chrome.");
-                window.location.href = "about:blank";
-            }
-        };
-    </script>
-</body>
-</html>
+        window.onload
