@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repo Button Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .button {
+            margin: 5px;
+            padding: 15px;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GitHub Repo Button Creator</h1>
+    <input type="text" id="repoUrl" placeholder="Enter GitHub Repo URL" />
+    <button id="fetchButton">Fetch Data</button>
+
+    <div id="buttons"></div>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', async () => {
+            const repoUrl = document.getElementById('repoUrl').value;
+            const regex = /github\.com\/([^\/]+)\/([^\/]+)/;
+            const match = repoUrl.match(regex);
+
+            if (!match) {
+                alert('Please enter a valid GitHub repository URL.');
+                return;
+            }
+
+            const [_, owner, repo] = match;
+            const fileUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/rr.txt`;
+
+            try {
+                console.log('Fetching data from:', fileUrl);
+                const response = await fetch(fileUrl);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.text();
+                console.log('Data fetched:', data);
+
+                const lines = data.split('\n');
+                const buttonsDiv = document.getElementById('buttons');
+                buttonsDiv.innerHTML = ''; // Clear previous buttons
+
+                lines.forEach(line => {
+                    const [imageUrl, url, name] = line.split(',');
+
+                    if (imageUrl && url && name) {
+                        const button = document.createElement('button');
+                        button.className = 'button';
+                        button.style.backgroundImage = `url(${imageUrl})`;
+                        button.textContent = name;
+
+                        button.onclick = () => {
+                            if (url.endsWith('.html')) {
+                                // Open HTML file in a new tab
+                                window.open(url, '_blank');
+                            } else {
+                                // For other types, just redirect to the URL
+                                window.open(url, '_blank');
+                            }
+                        };
+
+                        buttonsDiv.appendChild(button);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('An error occurred while fetching data.');
+            }
+        });
+    </script>
+</body>
+</html>
