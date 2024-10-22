@@ -4,38 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Repo Button Creator</title>
+
+    <!-- Import Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Import Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             padding: 20px;
         }
         #buttons {
             margin-top: 20px;
             display: flex;
             flex-wrap: wrap;
+            gap: 15px;
         }
         .button {
-            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
             padding: 15px;
             color: white;
             font-weight: bold;
-            border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             text-align: center;
             background-size: cover;
             background-position: center;
-            width: 200px;
-            height: 100px;
+            width: 250px;
+            height: 150px;
+            position: relative;
+        }
+        .button-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>GitHub Repo Button Creator</h1>
-    <input type="text" id="repoUrl" placeholder="Enter GitHub Repo URL" />
-    <button id="fetchButton">Fetch Data</button>
 
-    <div id="buttons"></div>
+    <div class="container">
+        <h1 class="center-align">GitHub Repo Button Creator</h1>
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" id="repoUrl" class="validate" placeholder="Enter GitHub Repo URL">
+                <label for="repoUrl">GitHub Repository URL</label>
+            </div>
+            <div class="col s12 center-align">
+                <button id="fetchButton" class="btn waves-effect waves-light">Fetch Data
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+
+        <div id="buttons" class="row"></div>
+    </div>
+
+    <!-- Import Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <script>
         document.getElementById('fetchButton').addEventListener('click', async () => {
@@ -44,7 +81,7 @@
             const match = repoUrl.match(regex);
 
             if (!match) {
-                alert('Please enter a valid GitHub repository URL.');
+                M.toast({html: 'Please enter a valid GitHub repository URL.', classes: 'red'});
                 return;
             }
 
@@ -70,17 +107,15 @@
                     const [imageUrl, url, name] = line.split(',');
 
                     if (imageUrl && url && name) {
-                        const button = document.createElement('button');
-                        button.className = 'button';
+                        const button = document.createElement('div');
+                        button.className = 'button col s12 m4 l3';
                         button.style.backgroundImage = `url(${imageUrl})`;
-                        button.textContent = name;
+                        button.innerHTML = `<div class="button-overlay">${name}</div>`;
 
                         button.onclick = () => {
                             if (url.endsWith('.html')) {
-                                // Open HTML file in a new tab
                                 window.open(url, '_blank');
                             } else {
-                                // For other types, just redirect to the URL
                                 window.open(url, '_blank');
                             }
                         };
@@ -90,9 +125,10 @@
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
-                alert('An error occurred while fetching data.');
+                M.toast({html: `An error occurred: ${error.message}`, classes: 'red'});
             }
         });
     </script>
+
 </body>
 </html>
