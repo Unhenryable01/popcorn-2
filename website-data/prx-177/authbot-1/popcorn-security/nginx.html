@@ -126,6 +126,11 @@
             background-image: url('https://base-prod.rspb-prod.magnolia-platform.com/dam/jcr:8b40b10a-c66d-4067-b5df-fe1d3cb31f7c/1614653728-Species-Snipe-stood-on-post.jpg');
         }
 
+        .tile.repo {
+            background-image: url('https://www.20i.com/blog/wp-content/uploads/2022/08/git-blog-header.png');
+            background-size: cover;
+        }
+
         footer {
             position: fixed;
             bottom: 0;
@@ -151,94 +156,6 @@
         .hidden {
             display: none;
         }
-
-        /* Card Styles */
-        .card {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 320px;
-            border-radius: 24px;
-            line-height: 1.6;
-            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 24px;
-            padding: 36px;
-            border-radius: 22px;
-            color: #ffffff;
-            overflow: hidden;
-            background: #0a3cff;
-            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .content::before {
-            position: absolute;
-            content: "";
-            top: -4%;
-            left: 50%;
-            width: 90%;
-            height: 90%;
-            transform: translate(-50%);
-            background: #ced8ff;
-            z-index: -1;
-            transform-origin: bottom;
-            border-radius: inherit;
-            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .content::after {
-            position: absolute;
-            content: "";
-            top: -8%;
-            left: 50%;
-            width: 80%;
-            height: 80%;
-            transform: translate(-50%);
-            background: #e7ecff;
-            z-index: -2;
-            transform-origin: bottom;
-            border-radius: inherit;
-            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .content svg {
-            width: 48px;
-            height: 48px;
-        }
-
-        .content .para {
-            z-index: 1;
-            opacity: 1;
-            font-size: 12px; /* Adjusted font size */
-            transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-            position: absolute; /* Changed position to absolute */
-            bottom: 10px; /* Positioning it to the bottom right */
-            right: 10px; /* Positioning it to the bottom right */
-        }
-
-        .card:hover {
-            transform: translate(0px, -16px);
-        }
-
-        .card:hover .content::before {
-            rotate: -8deg;
-            top: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .card:hover .content::after {
-            rotate: 8deg;
-            top: 0;
-            width: 100%;
-            height: 100%;
-        }
     </style>
 </head>
 <body>
@@ -261,21 +178,14 @@
 
         <!-- Game Tiles -->
         <div class="game-tiles">
-            <div class="tile eaglercraft hidden" id="eaglercraft" onclick="openEaglercraft()">Eaglercraft</div>
-            <div class="tile blockwave hidden" id="blockwave" onclick="openBlockwaveGallery()">BlockWave</div>
-            <div class="tile radar-client hidden" id="radarclient" onclick="openRadarClient()">Radar Client</div>
-            <div class="tile audio-player hidden" id="audioPlayer" onclick="openAudioPlayer()">Audio Player</div>
-            <div class="tile snipe-uncensor hidden" id="snipeuncensor" onclick="openSnipeUncensor()">SnipeUncensor</div>
-        </div>
+            <div class="tile eaglercraft hidden" id="eaglercraft" onclick="openGameInIframe('https://math-lessons.vercel.app/test.html')">Eaglercraft</div>
+            <div class="tile blockwave hidden" id="blockwave" onclick="openGameInIframe('https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md')">BlockWave</div>
+            <div class="tile radar-client hidden" id="radarclient" onclick="openGameInIframe('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html')">Radar Client</div>
+            <div class="tile audio-player hidden" id="audioPlayer" onclick="openGameInIframe('https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html')">Audio Player</div>
+            <div class="tile snipe-uncensor hidden" id="snipeuncensor" onclick="openGameInIframe('https://snipeuncensor.yaha.buzz/')">SnipeUncensor</div>
 
-        <!-- Hidden Card -->
-        <div class="card">
-            <div class="content">
-                <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 9V5H4V9H20ZM20 11H4V19H20V11ZM3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2 3 3 3ZM5 12H8V17H5V12ZM5 6H7V8H5V6ZM9 6H11V8H9V6Z"></path>
-                </svg>
-                <p class="para">There are no current SnipePoetry Events on right now! Please wait or check out the Whatsapp Channel!</p>
-            </div>
+            <!-- "Open Repo" button for all tiers -->
+            <div class="tile repo" onclick="openGameInIframe('/repoimport.html')">Open Repo</div>
         </div>
     </div>
 
@@ -293,7 +203,9 @@
             const games = {
                 "1x77": ["eaglercraft", "radarclient"],
                 "theblockwavekey": ["blockwave"],
-                "nitrosgamerguild": ["eaglercraft", "radarclient", "blockwave", "audioPlayer", "snipeuncensor"]
+                "nitrosgamerguild": ["eaglercraft", "radarclient", "blockwave", "audioPlayer", "snipeuncensor"],
+                "4x20@": ["eaglercraft"],  // Custom Tier 1.5 Key
+                "guest": ["eaglercraft"]   // Custom Tier 1.5 Key
             };
 
             const selectedGames = games[key];
@@ -308,35 +220,18 @@
             }
         }
 
-        // Function to open Eaglercraft
-        function openEaglercraft() {
-            window.open("https://math-lessons.vercel.app/test.html", "_blank");
-        }
+        // Function to open the game in a new about:blank page with iframe
+        function openGameInIframe(url) {
+            const newWindow = window.open("about:blank", "_blank");
+            const iframe = newWindow.document.createElement('iframe');
+            iframe.src = url;
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.border = "none";
+            newWindow.document.body.appendChild(iframe);
 
-        // Function to open BlockWave Gallery
-        function openBlockwaveGallery() {
-            window.open("https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md", "_blank");
-        }
-
-        // Function to open Radar Client
-        function openRadarClient() {
-            window.open("https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html", "_blank");
-        }
-
-        // Function to open Audio Player
-        function openAudioPlayer() {
-            window.open("https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html", "_blank");
-        }
-
-        // Function to open SnipeUncensor
-        function openSnipeUncensor() {
-            window.open("https://snipeuncensor.yaha.buzz/", "_blank");
-        }
-
-        // Function to check if user is on Chrome
-        function isChrome() {
-            const userAgent = navigator.userAgent.toLowerCase();
-            return userAgent.indexOf('chrome') > -1 && userAgent.indexOf('edge') === -1;
+            // Replace the current page with /ms.html
+            window.location.replace("/ms.html");
         }
 
         // Function to check the last page was /netv.html
@@ -345,19 +240,25 @@
             return referrer.includes("/netv.html");
         }
 
+        // Function to check if user is on Chrome
+        function isChrome() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return userAgent.indexOf('chrome') > -1 && userAgent.indexOf('edge') === -1;
+        }
+
         // Run the checks on page load
         window.onload = function() {
-            if (!isChrome()) {
-                alert("This page can only be viewed on Chrome.");
-                window.location.href = "about:blank";
-            }
-
             if (!checkReferrer()) {
                 alert("You must visit /netv.html first.");
                 window.location.href = "about:blank";
             }
 
             checkLicenseKey();
+
+            if (!isChrome()) {
+                alert("This page can only be viewed on Chrome.");
+                window.location.href = "about:blank";
+            }
         };
     </script>
 </body>
