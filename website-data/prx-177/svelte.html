@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popcorn Gaming Platform</title>
+    <style>
+        @font-face {
+            font-family: 'Atomic Marker';
+            src: url('https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/set-sail-studios-atomic-marker-regular.otf') format('opentype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        header {
+            background: rgba(25, 25, 25, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-family: 'Atomic Marker', sans-serif;
+            font-size: 3rem;
+            color: #0078d4;
+            text-shadow: 0 0 10px rgba(0, 120, 212, 0.5);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-container {
+            background: rgba(25, 25, 25, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 2rem;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        button {
+            background-color: #0078d4;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .game-tile {
+            background: rgba(25, 25, 25, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .game-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 120, 212, 0.3);
+        }
+
+        .game-tile img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .game-tile .game-name {
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        footer {
+            background: rgba(25, 25, 25, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <video class="video-background" autoplay muted loop>
+        <source src="https://github.com/MrInc0gnito/snipepoetry-popcorn/blob/main/854959-hd_1920_1080_30fps.mp4?raw=true" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header>
+        <h1>Popcorn</h1>
+    </header>
+
+    <main>
+        <div id="loginContainer" class="login-container">
+            <input type="text" id="licenseKey" placeholder="Enter license key">
+            <button onclick="checkLicenseKey()">Submit</button>
+            <button onclick="useGuestAccount()">Use Guest Account</button>
+        </div>
+
+        <div id="gameGrid" class="game-grid hidden"></div>
+    </main>
+
+    <footer>
+        <p>Made with ❤ by SnipeCo. 🍀</p>
+    </footer>
+
+    <script>
+        const games = {
+            "cubex2": ["eaglercraft", "audioPlayer"],
+            "nitrotheman": ["eaglercraft", "audioPlayer"],
+            "4x20@": ["eaglercraft", "radarclient", "audioPlayer"],
+            "guest": ["eaglercraft", "radarclient", "audioPlayer"],
+            "backagain": ["eaglercraft", "radarclient", "audioPlayer"],
+            "total": ["eaglercraft", "radarclient", "audioPlayer"],
+            "popcornpro": ["eaglercraft", "radarclient", "audioPlayer"],
+            "blockwavekeys": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+            "thedefinitionofblockwave": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+            "unblockwave": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+            "subkeys10": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+            "masterofpopcorn": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+            "shortcutstore": ["eaglercraft", "radarclient", "blockwave", "audioPlayer", "snipeuncensor", "shortcutstore"]
+        };
+
+        const gameUrls = {
+            eaglercraft: 'https://math-lessons.vercel.app/test.html',
+            blockwave: 'https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md',
+            radarclient: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html',
+            audioPlayer: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html',
+            snipeuncensor: 'https://snipeuncensor.yaha.buzz/',
+            repo: '/repoimport.html',
+            shortcutstore: '/webstandards.html'
+        };
+
+        const gameImages = {
+            eaglercraft: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8jBmwuWnaEQkYi5UJnlgTLpq6X87X8biMdA&s',
+            blockwave: 'https://ik.imagekit.io/vibemap/original_images_image_Hmq9NkBa0.jpg?refresh=10/29/2024%2012:00:00%20AM',
+            radarclient: 'https://i.ytimg.com/vi/fGywoioEoX0/maxresdefault.jpg',
+            audioPlayer: 'https://website-assets.commoninja.com/audio-player/og.png',
+            snipeuncensor: 'https://base-prod.rspb-prod.magnolia-platform.com/dam/jcr:8b40b10a-c66d-4067-b5df-fe1d3cb31f7c/1614653728-Species-Snipe-stood-on-post.jpg',
+            repo: 'https://www.20i.com/blog/wp-content/uploads/2022/08/git-blog-header.png',
+            shortcutstore: 'https://nektony.com/wp-content/uploads/2023/01/shortcuts_app_mac@2x.png'
+        };
+
+        function checkLicenseKey() {
+            const key = document.getElementById('licenseKey').value;
+            if (games[key]) {
+                showGames(games[key]);
+            } else {
+                alert("Invalid license key");
+            }
+        }
+
+        function useGuestAccount() {
+            showGames(games["guest"]);
+        }
+
+        function showGames(accessibleGames) {
+            const gameGrid = document.getElementById('gameGrid');
+            gameGrid.innerHTML = '';
+            gameGrid.classList.remove('hidden');
+            document.getElementById('loginContainer').classList.add('hidden');
+
+            accessibleGames.forEach(game => {
+                const tile = document.createElement('div');
+                tile.className = 'game-tile';
+                tile.onclick = () => openGameInNewTab(gameUrls[game]);
+
+                const img = document.createElement('img');
+                img.src = gameImages[game];
+                img.alt = game;
+
+                const name = document.createElement('div');
+                name.className = 'game-name';
+                name.textContent = game.charAt(0).toUpperCase() + game.slice(1);
+
+                tile.appendChild(img);
+                tile.appendChild(name);
+                gameGrid.appendChild(tile);
+            });
+
+            // Always add the repo tile
+            const repoTile = document.createElement('div');
+            repoTile.className = 'game-tile';
+            repoTile.onclick = () => openGameInNewTab(gameUrls.repo);
+
+            const repoImg = document.createElement('img');
+            repoImg.src = gameImages.repo;
+            repoImg.alt = 'Open Repo';
+
+            const repoName = document.createElement('div');
+            repoName.className = 'game-name';
+            repoName.textContent = 'Open Repo';
+
+            repoTile.appendChild(repoImg);
+            repoTile.appendChild(repoName);
+            gameGrid.appendChild(repoTile);
+        }
+
+        function openGameInNewTab(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
