@@ -1,264 +1,528 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popcorn Gaming Platform</title>
-    <style>
-        @font-face {
-            font-family: 'Atomic Marker';
-            src: url('https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/set-sail-studios-atomic-marker-regular.otf') format('opentype');
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popcorn Gaming Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Atomic Marker';
+      src: url('https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/set-sail-studios-atomic-marker-regular.otf') format('opentype');
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d0d0d;
-            color: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.3;
-            z-index: -1;
-        }
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: -1;
+    }
 
-        header {
-            background: rgba(25, 25, 25, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+    header {
+      background: rgba(25, 25, 25, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
 
-        h1 {
-            font-family: 'Atomic Marker', sans-serif;
-            font-size: 3rem;
-            color: #0078d4;
-            text-shadow: 0 0 10px rgba(0, 120, 212, 0.5);
-        }
+    h1 {
+      font-family: 'Atomic Marker', sans-serif;
+      font-size: 3rem;
+      color: #0078d4;
+      text-shadow: 0 0 10px rgba(0, 120, 212, 0.5);
+    }
 
-        main {
-            flex-grow: 1;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .settings-button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #ffffff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+      margin-left: auto;
+    }
 
-        .login-container {
-            background: rgba(25, 25, 25, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 2rem;
-        }
+    .settings-button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
 
-        input, button {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        input {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-        }
+    .login-container {
+      background: rgba(25, 25, 25, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 2rem;
+    }
 
-        button {
-            background-color: #0078d4;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    input, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-family: 'Open Sans', sans-serif;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+    input {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
 
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            width: 100%;
-            max-width: 1200px;
-        }
+    button {
+      background-color: #0078d4;
+      color: #ffffff;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
 
-        .game-tile {
-            background: rgba(25, 25, 25, 0.8);
-            backdrop-filter: blur(5px);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
+    button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 0 15px #0078d4;
+    }
 
-        .game-tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 120, 212, 0.3);
-        }
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      width: 100%;
+      max-width: 1200px;
+    }
 
-        .game-tile img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
+    .game-tile {
+      background: rgba(25, 25, 25, 0.8);
+      backdrop-filter: blur(5px);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
 
-        .game-tile .game-name {
-            padding: 1rem;
-            text-align: center;
-            font-weight: bold;
-        }
+    .game-tile:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 120, 212, 0.3);
+    }
 
-        footer {
-            background: rgba(25, 25, 25, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
-            text-align: center;
-        }
+    .game-tile img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
 
-        .hidden {
-            display: none;
-        }
-    </style>
+    .game-tile .game-name {
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    footer {
+      background: rgba(25, 25, 25, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .notice-board {
+      background: rgba(25, 25, 25, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .notice-board h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #0078d4;
+    }
+
+    .notice-board ul {
+      list-style-type: none;
+    }
+
+    .notice-board li {
+      margin-bottom: 0.5rem;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .custom-context-menu {
+      position: fixed;
+      background: rgba(25, 25, 25, 0.9);
+      backdrop-filter: blur(5px);
+      border-radius: 4px;
+      padding: 0.5rem;
+      z-index: 1000;
+    }
+
+    .custom-context-menu button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      text-align: left;
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .custom-context-menu button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .custom-context-menu button.close:hover {
+      background-color: #ff4444;
+      color: white;
+    }
+
+    #eaglercraftNotice {
+      background: rgba(25, 25, 25, 0.9);
+      backdrop-filter: blur(5px);
+      border-radius: 8px;
+      padding: 1rem;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      max-width: 400px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #eaglercraftNotice h3 {
+      margin-bottom: 1rem;
+    }
+
+    #eaglercraftNotice p {
+      margin-bottom: 1rem;
+    }
+
+    #eaglercraftNotice label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #cccccc;
+      order: 1;
+    }
+
+    #eaglercraftNotice input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+
+    #eaglercraftNotice .button-container {
+      display: flex;
+      justify-content: space-between;
+      order: 2;
+    }
+
+    #eaglercraftNotice .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s;
+      z-index: 1;
+    }
+
+    #eaglercraftNotice .close-button:hover {
+      color: #ff4444;
+    }
+
+    #eaglercraftMain {
+      background-color: #0078d4;
+    }
+
+    #eaglercraftBackup {
+      background-color: #28a745;
+    }
+  </style>
 </head>
 <body>
-    <video class="video-background" autoplay muted loop>
-        <source src="https://github.com/MrInc0gnito/snipepoetry-popcorn/blob/main/854959-hd_1920_1080_30fps.mp4?raw=true" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+  <video class="video-background" autoplay muted loop>
+    <source src="https://github.com/MrInc0gnito/snipepoetry-popcorn/blob/main/854959-hd_1920_1080_30fps.mp4?raw=true" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-    <header>
-        <h1>Popcorn</h1>
-    </header>
+  <header>
+    <h1>Popcorn</h1>
+    <button class="settings-button" onclick="window.location.href='/website-data/prx-177/binaries.html'">⚙️</button>
+  </header>
 
-    <main>
-        <div id="loginContainer" class="login-container">
-            <input type="text" id="licenseKey" placeholder="Enter license key">
-            <button onclick="checkLicenseKey()">Submit</button>
-            <button onclick="useGuestAccount()">Use Guest Account</button>
-        </div>
+  <main>
+    <div class="notice-board">
+      <h2>Notice Board</h2>
+      <ul>
+        <li>Christmas Calendar on 01/12</li>
+        <li>Start counting down :D</li>
+      </ul>
+    </div>
 
-        <div id="gameGrid" class="game-grid hidden"></div>
-    </main>
+    <div id="loginContainer" class="login-container">
+      <input type="text" id="licenseKey" placeholder="Enter license key">
+      <button onclick="checkLicenseKey()">Submit</button>
+      <button onclick="useGuestAccount()">Use Guest Account</button>
+    </div>
 
-    <footer>
-        <p>Made with ❤ by SnipeCo. 🍀</p>
-    </footer>
+    <div id="gameGrid" class="game-grid hidden"></div>
+  </main>
 
-    <script>
-        const games = {
-            "cubex2": ["eaglercraft", "audioPlayer"],
-            "nitrotheman": ["eaglercraft", "audioPlayer"],
-            "4x20@": ["eaglercraft", "radarclient", "audioPlayer"],
-            "guest": ["eaglercraft", "radarclient", "audioPlayer"],
-            "backagain": ["eaglercraft", "radarclient", "audioPlayer"],
-            "total": ["eaglercraft", "radarclient", "audioPlayer"],
-            "popcornpro": ["eaglercraft", "radarclient", "audioPlayer"],
-            "blockwavekeys": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
-            "thedefinitionofblockwave": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
-            "unblockwave": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
-            "subkeys10": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
-            "masterofpopcorn": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
-            "shortcutstore": ["eaglercraft", "radarclient", "blockwave", "audioPlayer", "snipeuncensor", "shortcutstore"]
-        };
+  <footer>
+    <p>Made with ❤ by SnipeCo. 🍀</p>
+  </footer>
 
-        const gameUrls = {
-            eaglercraft: 'https://math-lessons.vercel.app/test.html',
-            blockwave: 'https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md',
-            radarclient: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html',
-            audioPlayer: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html',
-            snipeuncensor: 'https://snipeux-ploxy.vercel.app/static/',
-            repo: '/repoimport.html',
-            shortcutstore: '/webstandards.html'
-        };
+  <div id="customContextMenu" class="custom-context-menu hidden">
+    <button onclick="closeContextMenu()">Close Menu</button>
+    <button onclick="openShortcut()">Open Shortcut</button>
+  </div>
 
-        const gameImages = {
-            eaglercraft: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8jBmwuWnaEQkYi5UJnlgTLpq6X87X8biMdA&s',
-            blockwave: 'https://ik.imagekit.io/vibemap/original_images_image_Hmq9NkBa0.jpg?refresh=10/29/2024%2012:00:00%20AM',
-            radarclient: 'https://i.ytimg.com/vi/fGywoioEoX0/maxresdefault.jpg',
-            audioPlayer: 'https://website-assets.commoninja.com/audio-player/og.png',
-            snipeuncensor: 'https://base-prod.rspb-prod.magnolia-platform.com/dam/jcr:8b40b10a-c66d-4067-b5df-fe1d3cb31f7c/1614653728-Species-Snipe-stood-on-post.jpg',
-            repo: 'https://www.20i.com/blog/wp-content/uploads/2022/08/git-blog-header.png',
-            shortcutstore: 'https://nektony.com/wp-content/uploads/2023/01/shortcuts_app_mac@2x.png'
-        };
+  <div id="eaglercraftNotice" style="display: none;">
+    <h3>Eaglercraft Notice</h3>
+    <button class="close-button" onclick="closeEaglercraftNotice()">×</button>
+    <p>Please be aware that Eaglercraft contains unmoderated chat. Do you accept this?</p>
+    <label>
+      <input type="checkbox" id="eaglercraftAccept">
+      I accept
+    </label>
+    <div class="button-container">
+      <button id="eaglercraftMain" onclick="openEaglercraftMain()" disabled>Eaglercraft</button>
+      <button id="eaglercraftBackup" onclick="openEaglercraftBackup()" disabled>Eaglercraft Backup</button>
+    </div>
+  </div>
 
-        function checkLicenseKey() {
-            const key = document.getElementById('licenseKey').value;
-            if (games[key]) {
-                showGames(games[key]);
-            } else {
-                alert("Invalid license key");
-            }
-        }
+  <script>
+    const games = {
+      "cubex2": ["eaglercraft", "audioPlayer"],
+      "nitrotheman": ["eaglercraft", "audioPlayer"],
+      "4x20@": ["eaglercraft", "radarclient", "audioPlayer"],
+      "guest": ["eaglercraft", "radarclient", "audioPlayer"],
+      "backagain": ["eaglercraft", "radarclient", "audioPlayer"],
+      "total": ["eaglercraft", "radarclient", "audioPlayer"],
+      "popcornpro": ["eaglercraft", "radarclient", "audioPlayer"],
+      "blockwavekeys": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+      "thedefinitionofblockwave": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+      "unblockwave": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+      "subkeys10": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+      "masterofpopcorn": ["blockwave", "eaglercraft", "radarclient", "audioPlayer", "snipeuncensor"],
+      "shortcutstore": ["eaglercraft", "radarclient", "blockwave", "audioPlayer", "snipeuncensor", "shortcutstore"]
+    };
 
-        function useGuestAccount() {
-            showGames(games["guest"]);
-        }
+    const gameUrls = {
+      eaglercraft: 'https://math-lessons.vercel.app/test.html',
+      blockwave: 'https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md',
+      radarclient: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html',
+      audioPlayer: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html',
+      snipeuncensor: 'https://snipeuncensor.yaha.buzz/',
+      repo: '/repoimport.html',
+      shortcutstore: '/webstandards.html'
+    };
 
-        function showGames(accessibleGames) {
-            const gameGrid = document.getElementById('gameGrid');
-            gameGrid.innerHTML = '';
-            gameGrid.classList.remove('hidden');
-            document.getElementById('loginContainer').classList.add('hidden');
+    const gameImages = {
+      eaglercraft: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8jBmwuWnaEQkYi5UJnlgTLpq6X87X8biMdA&s',
+      blockwave: 'https://ik.imagekit.io/vibemap/original_images_image_Hmq9NkBa0.jpg?refresh=10/29/2024%2012:00:00%20AM',
+      radarclient: 'https://i.ytimg.com/vi/fGywoioEoX0/maxresdefault.jpg',
+      audioPlayer: 'https://website-assets.commoninja.com/audio-player/og.png',
+      snipeuncensor: 'https://base-prod.rspb-prod.magnolia-platform.com/dam/jcr:8b40b10a-c66d-4067-b5df-fe1d3cb31f7c/1614653728-Species-Snipe-stood-on-post.jpg',
+      repo: 'https://www.20i.com/blog/wp-content/uploads/2022/08/git-blog-header.png',
+      shortcutstore: 'https://nektony.com/wp-content/uploads/2023/01/shortcuts_app_mac@2x.png'
+    };
 
-            accessibleGames.forEach(game => {
-                const tile = document.createElement('div');
-                tile.className = 'game-tile';
-                tile.onclick = () => openGameInNewTab(gameUrls[game]);
+    window.onload = function() {
+      const savedKey = localStorage.getItem('licenseKey');
+      if (savedKey) {
+        document.getElementById('licenseKey').value = savedKey;
+        checkLicenseKey();
+      }
+    };
 
-                const img = document.createElement('img');
-                img.src = gameImages[game];
-                img.alt = game;
+    function checkLicenseKey() {
+      const key = document.getElementById('licenseKey').value;
+      localStorage.setItem('licenseKey', key);
+      if (games[key]) {
+        showGames(games[key]);
+      } else {
+        alert("Invalid license key");
+      }
+    }
 
-                const name = document.createElement('div');
-                name.className = 'game-name';
-                name.textContent = game.charAt(0).toUpperCase() + game.slice(1);
+    function useGuestAccount() {
+      showGames(games["guest"]);
+    }
 
-                tile.appendChild(img);
-                tile.appendChild(name);
-                gameGrid.appendChild(tile);
-            });
+    function showGames(accessibleGames) {
+      const gameGrid = document.getElementById('gameGrid');
+      gameGrid.innerHTML = '';
+      gameGrid.classList.remove('hidden');
+      document.getElementById('loginContainer').classList.add('hidden');
 
-            // Always add the repo tile
-            const repoTile = document.createElement('div');
-            repoTile.className = 'game-tile';
-            repoTile.onclick = () => openGameInNewTab(gameUrls.repo);
+      accessibleGames.forEach(game => {
+        const tile = document.createElement('div');
+        tile.className = 'game-tile';
+        tile.onclick = () => handleGameClick(game);
+        tile.oncontextmenu = (e) => handleRightClick(e, game);
 
-            const repoImg = document.createElement('img');
-            repoImg.src = gameImages.repo;
-            repoImg.alt = 'Open Repo';
+        const img = document.createElement('img');
+        img.src = gameImages[game];
+        img.alt = game;
 
-            const repoName = document.createElement('div');
-            repoName.className = 'game-name';
-            repoName.textContent = 'Open Repo';
+        const name = document.createElement('div');
+        name.className = 'game-name';
+        name.textContent = game.charAt(0).toUpperCase() + game.slice(1);
 
-            repoTile.appendChild(repoImg);
-            repoTile.appendChild(repoName);
-            gameGrid.appendChild(repoTile);
-        }
+        tile.appendChild(img);
+        tile.appendChild(name);
+        gameGrid.appendChild(tile);
+      });
 
-        function openGameInNewTab(url) {
-            window.open(url, '_blank');
-        }
-    </script>
+      // Always add the repo tile
+      const repoTile = document.createElement('div');
+      repoTile.className = 'game-tile';
+      repoTile.onclick = () => openGameInNewTab(gameUrls.repo);
+      repoTile.oncontextmenu = (e) => handleRightClick(e, 'repo');
+
+      const repoImg = document.createElement('img');
+      repoImg.src = gameImages.repo;
+      repoImg.alt = 'Open Repo';
+
+      const repoName = document.createElement('div');
+      repoName.className = 'game-name';
+      repoName.textContent = 'Open Repo';
+
+      repoTile.appendChild(repoImg);
+      repoTile.appendChild(repoName);
+      gameGrid.appendChild(repoTile);
+    }
+
+    function handleGameClick(game) {
+      if (game === 'eaglercraft') {
+        showEaglercraftNotice();
+      } else {
+        openGameInNewTab(gameUrls[game]);
+      }
+    }
+
+    function handleRightClick(e, game) {
+      e.preventDefault();
+      const contextMenu = document.getElementById('customContextMenu');
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.classList.remove('hidden');
+      contextMenu.dataset.game = game;
+    }
+
+    function closeContextMenu() {
+      document.getElementById('customContextMenu').classList.add('hidden');
+    }
+
+    function openShortcut() {
+      const game = document.getElementById('customContextMenu').dataset.game;
+      if (game === 'eaglercraft') {
+        showEaglercraftNotice();
+      } else {
+        openGameInNewTab(gameUrls[game]);
+      }
+      closeContextMenu();
+    }
+
+    function showEaglercraftNotice() {
+      document.getElementById('eaglercraftNotice').style.display = 'flex';
+    }
+
+    function closeEaglercraftNotice() {
+      document.getElementById('eaglercraftNotice').style.display = 'none';
+    }
+
+    function openEaglercraftMain() {
+      openGameInNewTab('/website-data/prx-177/frontend.html');
+      closeEaglercraftNotice();
+    }
+
+    function openEaglercraftBackup() {
+      openGameInNewTab(gameUrls.eaglercraft);
+      closeEaglercraftNotice();
+    }
+
+    function openGameInNewTab(url) {
+      window.open(url, '_blank');
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#customContextMenu')) {
+        closeContextMenu();
+      }
+    });
+
+    const eaglercraftAcceptCheckbox = document.getElementById('eaglercraftAccept');
+    const eaglercraftButtons = document.querySelectorAll('#eaglercraftNotice button:not(.close-button)');
+
+    eaglercraftAcceptCheckbox.addEventListener('change', () => {
+      eaglercraftButtons.forEach(button => {
+        button.disabled = !eaglercraftAcceptCheckbox.checked;
+      });
+
+      if (eaglercraftAcceptCheckbox.checked) {
+        localStorage.setItem('eaglercraftAccepted', 'true');
+      } else {
+        localStorage.removeItem('eaglercraftAccepted');
+      }
+    });
+
+    // Check if user has previously accepted Eaglercraft notice
+    if (localStorage.getItem('eaglercraftAccepted') === 'true') {
+      eaglercraftAcceptCheckbox.checked = true;
+      eaglercraftButtons.forEach(button => {
+        button.disabled = false;
+      });
+    }
+  </script>
 </body>
 </html>
