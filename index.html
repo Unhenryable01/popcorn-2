@@ -3,152 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popcorn - BlockWave Network</title>
-
-    <!-- Importing Atomic Marker and Afacad Flux Fonts -->
+    <title>Popcorn</title>
     <style>
-        @font-face {
-            font-family: 'Atomic Marker';
-            src: url('https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/set-sail-studios-atomic-marker-regular.otf') format('opentype');
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux&display=swap');
-
-        /* Basic Reset */
-        * {
+        body {
+            font-family: monospace;
+            background-color: #111827;
+            color: #D1D5DB;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-
-        body, html {
-            height: 100%;
-            font-family: 'Afacad Flux', sans-serif;
-            overflow: hidden;
+        header {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #374151;
         }
-
-        /* Top Bar Styling */
-        .top-bar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 60px;
-            background: linear-gradient(to bottom, black, transparent);
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #10B981;
+        }
+        .button {
+            background-color: #059669;
+            color: black;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #047857;
+        }
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1rem;
+        }
+        @media (min-width: 768px) {
+            main {
+                padding: 2rem;
+            }
+        }
+        .terminal {
+            background-color: black;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+            max-width: 48rem;
+        }
+        .terminal-header {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        .terminal-button {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        .terminal-button-red { background-color: #EF4444; }
+        .terminal-button-yellow { background-color: #F59E0B; }
+        .terminal-button-green { background-color: #10B981; }
+        .terminal-content {
             display: flex;
             align-items: center;
+        }
+        .terminal-prompt {
+            color: #10B981;
+            margin-right: 0.5rem;
+        }
+        .terminal-text {
+            font-size: 1.25rem;
+            color: #D1D5DB;
+        }
+        @media (min-width: 768px) {
+            .terminal-text {
+                font-size: 1.5rem;
+            }
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: #D1D5DB;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .get-started {
+            background-color: #059669;
+            color: black;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .get-started:hover {
+            background-color: #047857;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        footer {
+            padding: 1rem;
+            border-top: 1px solid #374151;
+            display: flex;
             justify-content: center;
-            z-index: 2;
+            align-items: center;
         }
-
-        .top-bar h1 {
-            font-family: 'Atomic Marker', sans-serif;
-            color: white;
-            font-size: 2.5rem;
+        .footer-text {
+            font-size: 0.875rem;
+            color: #6B7280;
         }
-
-        /* Fullscreen Video */
-        .video-background {
+        .modal {
+            display: none;
             position: fixed;
-            top: 0;
+            z-index: 1;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            z-index: 1;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
         }
-
-        /* Content Overlay */
-        .content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            z-index: 2;
+        .modal-content {
+            background-color: #1F2937;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            width: 80%;
+            max-width: 500px;
         }
-
-        .content h2 {
-            font-family: 'Atomic Marker', sans-serif;
-            font-size: 3rem;
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
         }
-
-        .content p {
-            font-family: 'Afacad Flux', sans-serif;
-            font-size: 1.5rem;
-            margin-top: 20px;
-        }
-
-        /* Button Styling */
-        .content .btn {
-            display: inline-block;
-            font-family: 'Afacad Flux', sans-serif;
-            margin-top: 30px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            color: white;
-            background-color: black;
-            border: 2px solid white;
-            cursor: pointer;
+        .close:hover,
+        .close:focus {
+            color: #D1D5DB;
             text-decoration: none;
-            border-radius: 15px; /* Rounded corners */
-            transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+            cursor: pointer;
         }
-
-        .content .btn:hover {
-            background-color: white;
-            color: black;
+        .modal-title {
+            color: #10B981;
+            display: flex;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
         }
-
-        /* Footer Styling */
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 0;
-            z-index: 2;
-        }
-
-        footer h1 {
-            font-family: 'Atomic Marker', sans-serif;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        footer p {
-            font-family: 'Afacad Flux', sans-serif;
-            color: white;
-            font-size: 0.9rem;
+        .modal-description {
+            color: #9CA3AF;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="logo">Popcorn</div>
+        <button class="button" id="developerPortalBtn">Developer Portal</button>
+    </header>
 
-    <!-- Video Background -->
-    <video class="video-background" autoplay loop muted>
-        <source src="https://raw.githubusercontent.com/MrInc0gnito/popcorn/main/2792370-hd_1920_1080_30fps.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <main>
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-button terminal-button-red"></div>
+                <div class="terminal-button terminal-button-yellow"></div>
+                <div class="terminal-button terminal-button-green"></div>
+            </div>
+            <div class="terminal-content">
+                <span class="terminal-prompt">$</span>
+                <span class="terminal-text" id="typingText"></span>
+                <span class="cursor"></span>
+            </div>
+        </div>
+        <a href="https://github.com/MrInc0gnito/snipepoetry-popcorn" target="_blank" rel="noopener noreferrer" class="button">Launch Network</a>
+    </main>
 
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <h1>Popcorn</h1>
-    </div>
-
-    <!-- Content Section -->
-    <div class="content">
-        <h2>Reclaim the power of gaming</h2>
-        <p>The BlockWave network allows for gaming without boundaries.</p>
-        <a href="netv.html" class="btn">Connect to network</a>
-    </div>
-
-    <!-- Footer -->
     <footer>
-        <h1>Popcorn</h1>
-        <p>© 2024 SnipeCo. All rights reserved.</p>
+        <div class="footer-text">© 2024 SnipeCo. 🍀 Made with ❤</div>
     </footer>
 
+    <div id="developerPortalModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-git-fork"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/><path d="M12 12v3"/></svg>
+                Developer Portal
+            </h2>
+            <p class="modal-description">To host your own Popcorn instance, fork this site</p>
+            <a href="https://github.com/MrInc0gnito/snipepoetry-popcorn" target="_blank" rel="noopener noreferrer" class="button">Fork on GitHub</a>
+        </div>
+    </div>
+
+    <script>
+        const phrases = [
+            "Reclaim the power of gaming",
+            "Unblocking is the past",
+            "Proxy Smroxy",
+            "Nah I'd win",
+            "Bro is built like a 1x1 lego brick",
+            "Bro has W rizz",
+            "Hydra, your dog sheet",
+            "Say hello to Nitro",
+            "Use the \"guest\" license key"
+        ];
+
+        let text = '';
+        let isDeleting = false;
+        let loopNum = 0;
+        let typingSpeed = 100;
+
+        function handleTyping() {
+            const i = loopNum % phrases.length;
+            const fullText = phrases[i];
+
+            if (isDeleting) {
+                text = fullText.substring(0, text.length - 1);
+            } else {
+                text = fullText.substring(0, text.length + 1);
+            }
+
+            document.getElementById('typingText').textContent = text;
+
+            typingSpeed = isDeleting ? 30 : 100;
+
+            if (!isDeleting && text === fullText) {
+                setTimeout(() => isDeleting = true, 5000);
+            } else if (isDeleting && text === '') {
+                isDeleting = false;
+                loopNum++;
+            }
+
+            setTimeout(handleTyping, typingSpeed);
+        }
+
+        handleTyping();
+
+        // Modal functionality
+        const modal = document.getElementById("developerPortalModal");
+        const btn = document.getElementById("developerPortalBtn");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
