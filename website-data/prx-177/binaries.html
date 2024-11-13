@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popcorn Navigation</title>
+    <title>Popcorn Settings</title>
+    <script src="https://kit.fontawesome.com/3412ef2576.js" crossorigin="anonymous"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-color: #f59e0b;
+            --secondary-color: #3b82f6;
+            --background-color: #f0f2f5;
+            --text-color: #374151;
+            --sidebar-width: 256px;
+            --sidebar-collapsed-width: 64px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,7 +24,10 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .layout {
@@ -21,8 +36,36 @@
         }
 
         .sidebar {
-            width: 256px;
+            width: var(--sidebar-width);
+            background-color: #ffffff;
             border-right: 1px solid #e5e7eb;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transition: width 0.3s ease;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .sidebar-collapsed .sidebar {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        .sidebar-collapsed .nav-text {
+            display: none;
+        }
+
+        .sidebar-collapsed .nav-button {
+            justify-content: center;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            margin-left: var(--sidebar-width);
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar-collapsed .main-content {
+            margin-left: var(--sidebar-collapsed-width);
         }
 
         .header {
@@ -31,103 +74,85 @@
             gap: 0.5rem;
             padding: 1rem;
             border-bottom: 1px solid #e5e7eb;
+            background-color: #f8f9fa;
         }
 
-        .back-button {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .toggle-sidebar {
             background: none;
             border: none;
-            border-radius: 0.375rem;
             cursor: pointer;
-        }
-
-        .back-button:hover {
-            background-color: #f3f4f6;
+            font-size: 1.5rem;
+            color: var(--text-color);
         }
 
         .nav-button {
             width: 100%;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1rem;
             text-align: left;
             background: none;
             border: none;
-            border-radius: 0.375rem;
             cursor: pointer;
             font-size: 0.875rem;
             display: flex;
             align-items: center;
-            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .nav-button:hover {
             background-color: #f3f4f6;
+            transform: translateX(5px);
         }
 
-        .main-content {
-            flex: 1;
-            padding: 1rem;
+        .nav-button i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
         }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
+        .settings-category {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .dropdown-button {
-            padding: 0.5rem 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.375rem;
-            background: white;
-            cursor: pointer;
-            width: 200px;
+        .settings-category h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .settings-option {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            margin-bottom: 1rem;
         }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-radius: 0.375rem;
-            z-index: 1;
+        .settings-option label {
+            margin-left: 0.5rem;
+            color: var(--text-color);
         }
 
-        .dropdown-content button {
-            width: 100%;
-            padding: 0.5rem 1rem;
+        .button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.75rem 1rem;
             border: none;
-            background: none;
+            border-radius: 0.375rem;
             cursor: pointer;
-            text-align: left;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .dropdown-content button:hover {
-            background-color: #f3f4f6;
+        .button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
         }
 
-        .show {
-            display: block;
-        }
-
-        .helper-text {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-top: 0.5rem;
-        }
-
-        .leave-button {
-            color: #ef4444;
-        }
-
-        .leave-button:hover {
-            color: #dc2626;
+        .button i {
+            margin-right: 0.5rem;
         }
 
         .dialog {
@@ -140,6 +165,7 @@
             background-color: rgba(0,0,0,0.5);
             align-items: center;
             justify-content: center;
+            z-index: 1000;
         }
 
         .dialog-content {
@@ -148,6 +174,7 @@
             border-radius: 0.5rem;
             max-width: 400px;
             width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .dialog-header {
@@ -167,74 +194,185 @@
             margin-top: 1.5rem;
         }
 
-        .dialog-button {
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            border: 1px solid #e5e7eb;
-            background: white;
-            cursor: pointer;
+        .about-popcorn {
+            text-align: center;
         }
 
-        .dialog-button.primary {
-            background: #2563eb;
-            color: white;
-            border: none;
+        .about-popcorn i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
         }
 
-        .dialog-button.primary:hover {
-            background: #1d4ed8;
+        .spin {
+            animation: spin 1s linear infinite;
         }
 
-        .nav-section {
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        .admin-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .admin-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 1rem;
+        }
+
+        .admin-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .chart-container {
+            height: 200px;
+        }
+
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .quick-link {
+            background-color: #f3f4f6;
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            --background-color: #1f2937;
+            --text-color: #e5e7eb;
+        }
+
+        body.dark-mode .sidebar,
+        body.dark-mode .settings-category,
+        body.dark-mode .dialog-content,
+        body.dark-mode .admin-card {
+            background-color: #374151;
+        }
+
+        body.dark-mode .header {
+            background-color: #2c3e50;
+        }
+
+        body.dark-mode .nav-button:hover {
+            background-color: #4b5563;
+        }
+
+        body.dark-mode .quick-link {
+            background-color: #4b5563;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .quick-link:hover {
+            background-color: #6b7280;
         }
     </style>
 </head>
 <body>
+    <div id="loading-screen">
+        <div class="loader"></div>
+    </div>
+
     <div class="layout">
         <div class="sidebar">
             <div class="header">
-                <button class="back-button" onclick="goBack()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
+                <button class="toggle-sidebar" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2a9 9 0 0 0-9 9v7.5a3.5 3.5 0 0 0 3.5 3.5h11a3.5 3.5 0 0 0 3.5-3.5V11a9 9 0 0 0-9-9Z"/>
-                </svg>
+                <i class="fas fa-popcorn" style="font-size: 1.5rem; color: var(--primary-color);"></i>
             </div>
 
             <nav class="nav-section">
-                <button class="nav-button">Popcorn Tweaks</button>
-
-                <a href="/website-data/prx-177/authbot-1/popcorn-security/nginx.html" target="_blank" class="nav-button">
-                    Legacy Popcorn
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 0.5rem">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
-                    </svg>
-                </a>
-
-                <button class="nav-button leave-button" onclick="showLeaveDialog()">Leave Popcorn</button>
+                <button class="nav-button" onclick="showSettings('general')">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-text">General</span>
+                </button>
+                <button class="nav-button" onclick="showSettings('performance')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="nav-text">Performance</span>
+                </button>
+                <button class="nav-button" onclick="showSettings('appearance')">
+                    <i class="fas fa-paint-brush"></i>
+                    <span class="nav-text">Appearance</span>
+                </button>
+                <button class="nav-button" onclick="showSettings('privacy')">
+                    <i class="fas fa-user-secret"></i>
+                    <span class="nav-text">Privacy</span>
+                </button>
+                <button class="nav-button" onclick="showAdminPanel()">
+                    <i class="fas fa-user-shield"></i>
+                    <span class="nav-text">Admin Panel</span>
+                </button>
+                <button class="nav-button" onclick="showAbout()">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="nav-text">About</span>
+                </button>
+                <button class="nav-button" style="color: #ef4444;" onclick="showLeaveDialog()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-text">Leave Popcorn</span>
+                </button>
             </nav>
         </div>
 
         <div class="main-content">
-            <div class="dropdown">
-                <button class="dropdown-button" onclick="toggleDropdown()">
-                    Tab Cloak: <span id="selectedMask">Popcorn</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <div id="tabCloakDropdown" class="dropdown-content">
-                    <button onclick="handleMaskChange('Popcorn')">Popcorn</button>
-                    <button onclick="handleMaskChange('Google')">Google</button>
-                    <button onclick="handleMaskChange('Microsoft')">Microsoft</button>
-                </div>
-            </div>
-            <div class="helper-text">
-                To switch license keys, clear this pages browser cache
-            </div>
+            <div id="settings-container"></div>
         </div>
     </div>
 
@@ -244,24 +382,184 @@
                 <h2 class="dialog-title">Do you want to leave?</h2>
             </div>
             <div class="dialog-footer">
-                <button class="dialog-button" onclick="hideLeaveDialog()">Cancel</button>
-                <button class="dialog-button primary" onclick="handleLeave()">Continue</button>
+                <button class="button" onclick="hideLeaveDialog()">Cancel</button>
+                <button class="button" style="background-color: #ef4444;" onclick="handleLeave()">Leave</button>
             </div>
         </div>
     </div>
 
+    <div id="adminPanel" class="dialog">
+        <div class="dialog-content" style="max-width: 800px; width: 90%;">
+            <div class="dialog-header">
+                <h2 class="dialog-title">Admin Panel</h2>
+            </div>
+            <div id="adminLoginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button class="button" onclick="checkAdminCredentials()">Login</button>
+            </div>
+            <div id="adminCodeForm" style="display: none;">
+                <input type="text" id="adminCode" placeholder="3-digit code" required>
+                <button class="button" onclick="checkAdminCode()">Submit</button>
+            </div>
+            <div id="adminContent" style="display: none;">
+                <div class="admin-panel">
+                    <div class="admin-card">
+                        <h3>Active Users</h3>
+                        <p id="activeUsers">Loading...</p>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Most Clicked Game</h3>
+                        <p id="mostClickedGame">Loading...</p>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Game Clicks</h3>
+                        <div id="gameClicksChart" class="chart-container"></div>
+                    </div>
+                    <div class="admin-card">
+                        <h3>Quick Links</h3>
+                        <div class="quick-links">
+                            <a href="/" class="quick-link">Homepage</a>
+                            <a href="/website-data/prx-177/frontend.html" class="quick-link">Eaglercraft</a>
+                            <a href="/browserblock.html" class="quick-link">Insider Page</a>
+                            <a href="/website-data/prx-177/svelte.html" class="quick-link">Main Page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        function goBack() {
-            window.history.back();
+        let darkMode = false;
+        let sidebarCollapsed = false;
+        let enableAnimations = true;
+
+        function toggleSidebar() {
+            sidebarCollapsed = !sidebarCollapsed;
+            document.body.classList.toggle('sidebar-collapsed', sidebarCollapsed);
         }
 
-        function toggleDropdown() {
-            document.getElementById("tabCloakDropdown").classList.toggle("show");
+        function showSettings(category) {
+            const container = document.getElementById('settings-container');
+            container.innerHTML = ''; // Clear previous content
+            
+            const categoryContent = {
+                general: `
+                    <div class="settings-category ${enableAnimations ? 'slide-in' : ''}">
+                        <h2>General Settings</h2>
+                        <div class="settings-option">
+                            <input type="checkbox" id="enableNotifications" checked>
+                            <label for="enableNotifications">Enable notifications</label>
+                        </div>
+                        <div class="settings-option">
+                            <input type="checkbox" id="autoUpdate" checked>
+                            <label for="autoUpdate">Auto-update Popcorn</label>
+                        </div>
+                    </div>
+                `,
+                performance: `
+                    <div class="settings-category ${enableAnimations ? 'slide-in' : ''}">
+                        <h2>Performance Settings</h2>
+                        <div class="settings-option">
+                            <input type="checkbox" id="enableCache" checked>
+                            <label for="enableCache">Enable browser caching</label>
+                        </div>
+                        <div class="settings-option">
+                            <input type="checkbox" id="enableAnimations" ${enableAnimations ? 'checked' : ''} onchange="toggleAnimations()">
+                            <label for="enableAnimations">Enable animations</label>
+                        </div>
+                        <div class="settings-option">
+                            <input type="checkbox" id="lazyLoading" checked>
+                            <label for="lazyLoading">Enable lazy loading for images</label>
+                        </div>
+                        <div class="settings-option">
+                            <input type="checkbox" id="prefetching" checked>
+                            <label for="prefetching">Enable link prefetching</label>
+                        </div>
+                        <button class="button" onclick="clearCache()">
+                            <i class="fas fa-broom"></i> Clear Cache
+                        </button>
+                    </div>
+                `,
+                appearance: `
+                    <div class="settings-category ${enableAnimations ? 'slide-in' : ''}">
+                        <h2>Appearance Settings</h2>
+                        <div class="settings-option">
+                            <select id="themeSelect" onchange="changeTheme()">
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                                <option value="system">System Default</option>
+                            </select>
+                            <label for="themeSelect">Theme</label>
+                        </div>
+                        <div class="settings-option">
+                            <input type="checkbox" id="highContrast">
+                            <label for="highContrast">High Contrast Mode</label>
+                        </div>
+                    </div>
+                `,
+                privacy: `
+                    <div class="settings-category ${enableAnimations ? 'slide-in' : ''}">
+                        <h2>Privacy Settings</h2>
+                        <div class="settings-option">
+                            <input type="checkbox" id="doNotTrack" checked>
+                            <label for="doNotTrack">Enable Do Not Track</label>
+                        </div>
+                        <div class="settings-option">
+                            <input type="checkbox" id="blockThirdPartyCookies" checked>
+                            <label for="blockThirdPartyCookies">Block third-party cookies</label>
+                        </div>
+                        <div class="settings-option">
+                            <input type="checkbox" id="vpnMode">
+                            <label for="vpnMode">VPN Mode (Experimental)</label>
+                        </div>
+                        <button class="button" onclick="window.location.href='/browserblock.html'">
+                            <i class="fas fa-user-shield"></i> Become an Insider
+                        </button>
+                    </div>
+                `
+            };
+
+            container.innerHTML = categoryContent[category] || '';
         }
 
-        function handleMaskChange(mask) {
-            document.getElementById("selectedMask").textContent = mask;
-            document.getElementById("tabCloakDropdown").classList.remove("show");
+        function changeTheme() {
+            const theme = document.getElementById('themeSelect').value;
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+            } else if (theme === 'light') {
+                document.body.classList.remove('dark-mode');
+            } else {
+                // System default
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+            }
+        }
+
+        function toggleAnimations() {
+            enableAnimations = !enableAnimations;
+            // You would need to update your CSS to respect this setting
+            document.body.classList.toggle('disable-animations', !enableAnimations);
+        }
+
+        function clearCache() {
+            localStorage.clear();
+            sessionStorage.clear();
+            let cookies = document.cookie.split(";");
+
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i];
+                let eqPos = cookie.indexOf("=");
+                let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+
+            alert("Cache cleared successfully!");
         }
 
         function showLeaveDialog() {
@@ -276,18 +574,164 @@
             window.location.href = "https://google.com";
         }
 
-        // Close dropdown when clicking outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-button')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
+        function showAdminPanel() {
+            document.getElementById("adminPanel").style.display = "flex";
+            document.getElementById("adminLoginForm").style.display = "block";
+            document.getElementById("adminCodeForm").style.display = "none";
+            document.getElementById("adminContent").style.display = "none";
+        }
+
+        function checkAdminCredentials() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            
+            if (username === "nitro" && password === "knockknock") {
+                document.getElementById("adminLoginForm").style.display = "none";
+                document.getElementById("adminCodeForm").style.display = "block";
+            } else {
+                alert("Invalid credentials");
             }
         }
+
+        function checkAdminCode() {
+            const code = document.getElementById("adminCode").value;
+            
+            if (code === "dev") {
+                document.getElementById("adminCodeForm").style.display = "none";
+                document.getElementById("adminContent").style.display = "block";
+                loadAdminData();
+            } else {
+                alert("Invalid code");
+            }
+        }
+
+        function loadAdminData() {
+            // Simulating API calls to get real-time data
+            fetch('/api/active-users')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('activeUsers').textContent = data.count;
+                })
+                .catch(error => {
+                    console.error('Error fetching active users:', error);
+                    document.getElementById('activeUsers').textContent = 'Error loading data';
+                });
+
+            fetch('/api/most-clicked-game')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('mostClickedGame').textContent = data.game;
+                })
+                .catch(error => {
+                    console.error('Error fetching most clicked game:', error);
+                    document.getElementById('mostClickedGame').textContent = 'Error loading data';
+                });
+
+            fetch('/api/game-clicks')
+                .then(response => response.json())
+                .then(data => {
+                    createGameClicksChart(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching game clicks:', error);
+                    document.getElementById('gameClicksChart').textContent = 'Error loading chart';
+                });
+        }
+
+        function createGameClicksChart(data) {
+            const ctx = document.getElementById('gameClicksChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(item => item.game),
+                    datasets: [{
+                        label: 'Clicks',
+                        data: data.map(item => item.clicks),
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function showAbout() {
+            const container = document.getElementById('settings-container');
+            container.innerHTML = `
+                <div class="settings-category ${enableAnimations ? 'slide-in' : ''} about-popcorn">
+                    <i class="fas fa-popcorn" id="popcornIcon"></i>
+                    <h2>About Popcorn</h2>
+                    <p>Developed by: Nitro</p>
+                    <p>Endorsed by: UltimaPCs</p>
+                </div>
+            `;
+
+            const popcornIcon = document.getElementById('popcornIcon');
+            popcornIcon.addEventListener('click', () => {
+                popcornIcon.classList.add('spin');
+                setTimeout(() => popcornIcon.classList.remove('spin'), 1000);
+            });
+        }
+
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.body.classList.add('fade-in');
+            }, 1000);
+        });
+
+        // Initialize with General Settings
+        showSettings('general');
+
+        // Close admin panel when clicking outside
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("adminPanel")) {
+                document.getElementById("adminPanel").style.display = "none";
+            }
+        }
+
+        // Easter Eggs (MAX 3)
+        // 1. Konami Code
+        let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    alert('Konami Code Activated! You found an easter egg!');
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // 2. Click Popcorn icon 10 times
+        let popcornClicks = 0;
+        document.querySelector('.fa-popcorn').addEventListener('click', () => {
+            popcornClicks++;
+            if (popcornClicks === 10) {
+                alert('You really love popcorn! Easter egg found!');
+                popcornClicks = 0;
+            }
+        });
+
+        // 3. Type "popcorn" in any input field
+        document.addEventListener('input', (e) => {
+            if (e.target.tagName === 'INPUT' && e.target.value.toLowerCase() === 'popcorn') {
+                alert('You typed the magic word! Easter egg discovered!');
+            }
+        });
     </script>
 </body>
 </html>
