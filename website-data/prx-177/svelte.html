@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Popcorn Gaming Platform</title>
+  <title>Popcorn Gaming</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     @font-face {
@@ -219,10 +219,11 @@
     }
 
     #eaglercraftNotice {
-      background: rgba(25, 25, 25, 0.9);
-      backdrop-filter: blur(5px);
-      border-radius: 8px;
-      padding: 1rem;
+      background: rgba(25, 25, 25, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       position: fixed;
       top: 50%;
       left: 50%;
@@ -233,45 +234,71 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
+      color: #ffffff;
     }
 
     #eaglercraftNotice h3 {
+      color: #0078d4;
       margin-bottom: 1rem;
+      font-size: 1.5rem;
     }
 
     #eaglercraftNotice p {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
     }
 
     #eaglercraftNotice label {
       display: flex;
       align-items: center;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      color: #cccccc;
-      order: 1;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      color: #ffffff;
     }
 
     #eaglercraftNotice input[type="checkbox"] {
-      margin-right: 0.5rem;
+      margin-right: 0.75rem;
+      width: 18px;
+      height: 18px;
     }
 
     #eaglercraftNotice .button-container {
       display: flex;
       justify-content: space-between;
-      order: 2;
+      gap: 1rem;
+    }
+
+    #eaglercraftNotice button:not(.close-button) {
+      flex: 1;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #eaglercraftNotice button:not(.close-button):hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #eaglercraftNotice button:not(.close-button):disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     #eaglercraftNotice .close-button {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 0.75rem;
+      right: 0.75rem;
       background: none;
       border: none;
       font-size: 1.5rem;
+      color: #ffffff;
       cursor: pointer;
       transition: color 0.3s;
-      z-index: 1;
     }
 
     #eaglercraftNotice .close-button:hover {
@@ -280,10 +307,45 @@
 
     #eaglercraftMain {
       background-color: #0078d4;
+      color: #ffffff;
     }
 
     #eaglercraftBackup {
       background-color: #28a745;
+      color: #ffffff;
+    }
+
+    .purchase-pc {
+      background: rgba(25, 25, 25, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .purchase-pc span {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .purchase-button {
+      background-color: #0078d4;
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .purchase-button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 0 15px #0078d4;
     }
   </style>
 </head>
@@ -304,8 +366,12 @@
       <ul>
         <li>Christmas Calendar on 01/12</li>
         <li>Start counting down :D</li>
-        <li>Go to: Bit.ly/Ultima-Pcs</li>
       </ul>
+    </div>
+
+    <div class="purchase-pc">
+      <span>Purchase a PC today</span>
+      <a href="https://Bit.ly/Ultima-Pcs" target="_blank" class="purchase-button">Buy Now</a>
     </div>
 
     <div id="loginContainer" class="login-container">
@@ -329,13 +395,13 @@
   <div id="eaglercraftNotice" style="display: none;">
     <h3>Eaglercraft Notice</h3>
     <button class="close-button" onclick="closeEaglercraftNotice()">×</button>
-    <p>Please be aware that Eaglercraft contains unmoderated chat. Do you accept this?</p>
+    <p>Please be aware that Eaglercraft contains unmoderated chat. To proceed, you must accept this condition.</p>
     <label>
       <input type="checkbox" id="eaglercraftAccept">
-      I accept
+      I understand and accept the terms
     </label>
     <div class="button-container">
-      <button id="eaglercraftMain" onclick="openEaglercraftMain()" disabled>Eaglercraft</button>
+      <button id="eaglercraftMain" onclick="openEaglercraftMain()" disabled>Play Eaglercraft</button>
       <button id="eaglercraftBackup" onclick="openEaglercraftBackup()" disabled>Eaglercraft Backup</button>
     </div>
   </div>
@@ -362,7 +428,7 @@
       blockwave: 'https://github.com/MrInc0gnito/BlockWave-Gallery/blob/main/games.md',
       radarclient: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/nginxlocal.html',
       audioPlayer: 'https://schoolsplus.vercel.app/website-data/prx-177/authbot-1/popcorn-security/websitecache.html',
-      snipeuncensor: 'https://snipeux-ploxy.vercel.app/static/',
+      snipeuncensor: 'https://snipeuncensor.yaha.buzz/',
       repo: '/repoimport.html',
       shortcutstore: '/webstandards.html'
     };
@@ -506,11 +572,12 @@
     const eaglercraftButtons = document.querySelectorAll('#eaglercraftNotice button:not(.close-button)');
 
     eaglercraftAcceptCheckbox.addEventListener('change', () => {
+      const isChecked = eaglercraftAcceptCheckbox.checked;
       eaglercraftButtons.forEach(button => {
-        button.disabled = !eaglercraftAcceptCheckbox.checked;
+        button.disabled = !isChecked;
       });
 
-      if (eaglercraftAcceptCheckbox.checked) {
+      if (isChecked) {
         localStorage.setItem('eaglercraftAccepted', 'true');
       } else {
         localStorage.removeItem('eaglercraftAccepted');
