@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popcorn Settings</title>
+    <title>Popcorn Navigation</title>
     <script src="https://kit.fontawesome.com/3412ef2576.js" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
@@ -323,6 +323,11 @@
         body.dark-mode .quick-link:hover {
             background-color: #6b7280;
         }
+
+        .disable-animations * {
+            transition: none !important;
+            animation: none !important;
+        }
     </style>
 </head>
 <body>
@@ -435,6 +440,7 @@
         let darkMode = false;
         let sidebarCollapsed = false;
         let enableAnimations = true;
+        let vpnMode = false;
 
         function toggleSidebar() {
             sidebarCollapsed = !sidebarCollapsed;
@@ -450,11 +456,11 @@
                     <div class="settings-category ${enableAnimations ? 'slide-in' : ''}">
                         <h2>General Settings</h2>
                         <div class="settings-option">
-                            <input type="checkbox" id="enableNotifications" checked>
+                            <input type="checkbox" id="enableNotifications" ${localStorage.getItem('enableNotifications') === 'true' ? 'checked' : ''} onchange="updateSetting('enableNotifications', this.checked)">
                             <label for="enableNotifications">Enable notifications</label>
                         </div>
                         <div class="settings-option">
-                            <input type="checkbox" id="autoUpdate" checked>
+                            <input type="checkbox" id="autoUpdate" ${localStorage.getItem('autoUpdate') === 'true' ? 'checked' : ''} onchange="updateSetting('autoUpdate', this.checked)">
                             <label for="autoUpdate">Auto-update Popcorn</label>
                         </div>
                     </div>
@@ -463,7 +469,7 @@
                     <div class="settings-category ${enableAnimations ? 'slide-in' : ''}">
                         <h2>Performance Settings</h2>
                         <div class="settings-option">
-                            <input type="checkbox" id="enableCache" checked>
+                            <input type="checkbox" id="enableCache" ${localStorage.getItem('enableCache') === 'true' ? 'checked' : ''} onchange="updateSetting('enableCache', this.checked)">
                             <label for="enableCache">Enable browser caching</label>
                         </div>
                         <div class="settings-option">
@@ -471,11 +477,11 @@
                             <label for="enableAnimations">Enable animations</label>
                         </div>
                         <div class="settings-option">
-                            <input type="checkbox" id="lazyLoading" checked>
+                            <input type="checkbox" id="lazyLoading" ${localStorage.getItem('lazyLoading') === 'true' ? 'checked' : ''} onchange="updateSetting('lazyLoading', this.checked)">
                             <label for="lazyLoading">Enable lazy loading for images</label>
                         </div>
                         <div class="settings-option">
-                            <input type="checkbox" id="prefetching" checked>
+                            <input type="checkbox" id="prefetching" ${localStorage.getItem('prefetching') === 'true' ? 'checked' : ''} onchange="updateSetting('prefetching', this.checked)">
                             <label for="prefetching">Enable link prefetching</label>
                         </div>
                         <button class="button" onclick="clearCache()">
@@ -488,14 +494,14 @@
                         <h2>Appearance Settings</h2>
                         <div class="settings-option">
                             <select id="themeSelect" onchange="changeTheme()">
-                                <option value="light">Light</option>
-                                <option value="dark">Dark</option>
-                                <option value="system">System Default</option>
+                                <option value="light" ${localStorage.getItem('theme') === 'light' ? 'selected' : ''}>Light</option>
+                                <option value="dark" ${localStorage.getItem('theme') === 'dark' ? 'selected' : ''}>Dark</option>
+                                <option value="system" ${localStorage.getItem('theme') === 'system' ? 'selected' : ''}>System Default</option>
                             </select>
                             <label for="themeSelect">Theme</label>
                         </div>
                         <div class="settings-option">
-                            <input type="checkbox" id="highContrast">
+                            <input type="checkbox" id="highContrast" ${localStorage.getItem('highContrast') === 'true' ? 'checked' : ''} onchange="updateSetting('highContrast', this.checked)">
                             <label for="highContrast">High Contrast Mode</label>
                         </div>
                     </div>
@@ -504,15 +510,15 @@
                     <div class="settings-category ${enableAnimations ? 'slide-in' : ''}">
                         <h2>Privacy Settings</h2>
                         <div class="settings-option">
-                            <input type="checkbox" id="doNotTrack" checked>
+                            <input type="checkbox" id="doNotTrack" ${localStorage.getItem('doNotTrack') === 'true' ? 'checked' : ''} onchange="updateSetting('doNotTrack', this.checked)">
                             <label for="doNotTrack">Enable Do Not Track</label>
                         </div>
                         <div class="settings-option">
-                            <input type="checkbox" id="blockThirdPartyCookies" checked>
+                            <input type="checkbox" id="blockThirdPartyCookies" ${localStorage.getItem('blockThirdPartyCookies') === 'true' ? 'checked' : ''} onchange="updateSetting('blockThirdPartyCookies', this.checked)">
                             <label for="blockThirdPartyCookies">Block third-party cookies</label>
                         </div>
                         <div class="settings-option">
-                            <input type="checkbox" id="vpnMode">
+                            <input type="checkbox" id="vpnMode" ${vpnMode ? 'checked' : ''} onchange="toggleVPNMode()">
                             <label for="vpnMode">VPN Mode (Experimental)</label>
                         </div>
                         <button class="button" onclick="window.location.href='/browserblock.html'">
@@ -525,8 +531,62 @@
             container.innerHTML = categoryContent[category] || '';
         }
 
+        function updateSetting(setting, value) {
+            localStorage.setItem(setting, value);
+            applySettings();
+        }
+
+        function applySettings() {
+            // Apply settings based on localStorage values
+            if (localStorage.getItem('enableNotifications') === 'true') {
+                // Enable notifications logic
+                console.log('Notifications enabled');
+            }
+
+            if (localStorage.getItem('autoUpdate') === 'true') {
+                // Auto-update logic
+                console.log('Auto-update enabled');
+            }
+
+            if (localStorage.getItem('enableCache') === 'true') {
+                // Enable caching logic
+                console.log('Browser caching enabled');
+            }
+
+            if (localStorage.getItem('lazyLoading') === 'true') {
+                // Lazy loading logic
+                console.log('Lazy loading enabled');
+            }
+
+            if (localStorage.getItem('prefetching') === 'true') {
+                // Link prefetching logic
+                console.log('Link prefetching enabled');
+            }
+
+            if (localStorage.getItem('highContrast') === 'true') {
+                document.body.classList.add('high-contrast');
+            } else {
+                document.body.classList.remove('high-contrast');
+            }
+
+            if (localStorage.getItem('doNotTrack') === 'true') {
+                // Set Do Not Track header
+                navigator.doNotTrack = "1";
+            }
+
+            if (localStorage.getItem('blockThirdPartyCookies') === 'true') {
+                // Block third-party cookies logic
+                console.log('Third-party cookies blocked');
+            }
+        }
+
         function changeTheme() {
             const theme = document.getElementById('themeSelect').value;
+            localStorage.setItem('theme', theme);
+            applyTheme(theme);
+        }
+
+        function applyTheme(theme) {
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
             } else if (theme === 'light') {
@@ -543,8 +603,20 @@
 
         function toggleAnimations() {
             enableAnimations = !enableAnimations;
-            // You would need to update your CSS to respect this setting
+            localStorage.setItem('enableAnimations', enableAnimations);
             document.body.classList.toggle('disable-animations', !enableAnimations);
+        }
+
+        function toggleVPNMode() {
+            vpnMode = !vpnMode;
+            localStorage.setItem('vpnMode', vpnMode);
+            if (vpnMode) {
+                console.log('VPN Mode enabled');
+                // Implement VPN logic here
+            } else {
+                console.log('VPN Mode disabled');
+                // Disable VPN logic here
+            }
         }
 
         function clearCache() {
@@ -688,6 +760,13 @@
                 document.getElementById('loading-screen').style.display = 'none';
                 document.body.classList.add('fade-in');
             }, 1000);
+
+            // Apply saved settings
+            applySettings();
+            applyTheme(localStorage.getItem('theme') || 'system');
+            enableAnimations = localStorage.getItem('enableAnimations') !== 'false';
+            document.body.classList.toggle('disable-animations', !enableAnimations);
+            vpnMode = localStorage.getItem('vpnMode') === 'true';
         });
 
         // Initialize with General Settings
