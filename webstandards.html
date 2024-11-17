@@ -1,422 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popcorn Play</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snipe Play</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
 
-        body {
-            background-color: #f8f9fa;
-        }
+    body {
+      background-color: #f8f9fa;
+    }
 
-        header {
-            background: white;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 0 24px;
-        }
+    header {
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 0 24px;
+    }
 
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 20px;
-            font-weight: 500;
-        }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 500;
+    }
 
-        nav {
-            display: flex;
-            gap: 32px;
-        }
+    nav {
+      display: flex;
+      gap: 32px;
+    }
 
-        .nav-button {
-            border: none;
-            background: none;
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+    .nav-button {
+      border: none;
+      background: none;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
 
-        .nav-button.active {
-            color: #00875f;
-        }
+    .nav-button.active {
+      color: #00875f;
+    }
 
-        .nav-button:hover {
-            background: #f5f5f5;
-        }
+    .nav-button:hover {
+      background: #f5f5f5;
+    }
 
-        .header-actions {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+    .header-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
 
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            background: #00875f;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
+    .search-container {
+      position: relative;
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 24px;
-        }
+    .search-input {
+      padding: 8px 16px 8px 40px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      font-size: 14px;
+      width: 250px;
+    }
 
-        .device-types {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
 
-        .device-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-        }
+    .icon-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+    }
 
-        .device-button:hover {
-            background: #f5f5f5;
-        }
+    .home-icon {
+      width: 32px;
+      height: 32px;
+      background: #00875f;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
 
-        .search-and-categories {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-            align-items: center;
-        }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
 
-        .search-container {
-            position: relative;
-            max-width: 400px;
-            flex: 1;
-        }
+    .device-types {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
 
-        .search-input {
-            width: 100%;
-            padding: 8px 16px 8px 40px;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            font-size: 14px;
-        }
+    .device-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-        }
+    .device-button:hover, .device-button.active {
+      background: #00875f;
+      color: white;
+    }
 
-        .categories {
-            display: flex;
-            gap: 8px;
-        }
+    .categories {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
 
-        .category-button {
-            padding: 8px 16px;
-            border: none;
-            background: #f5f5f5;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+    .category-button {
+      padding: 8px 16px;
+      border: none;
+      background: #f5f5f5;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-        .category-button.active {
-            background: #e0e0e0;
-        }
+    .category-button.active {
+      background: #e0e0e0;
+    }
 
-        .section-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 24px;
-        }
+    .section-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 24px;
+    }
 
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 24px;
-        }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+    }
 
-        .game-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
+    .game-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
-        .game-card:hover {
-            transform: scale(1.03);
-        }
+    .game-card:hover {
+      transform: scale(1.03);
+    }
 
-        .game-image {
-            width: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-        }
+    .game-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
 
-        .game-info {
-            padding: 16px;
-        }
+    .game-info {
+      padding: 16px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .game-name {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
+    .game-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
 
-        .game-developer {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
-        }
+    .game-developer {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
 
-        .game-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 16px;
-        }
+    .game-developer a {
+      color: #00875f;
+      text-decoration: none;
+    }
 
-        .star-icon {
-            color: #fbbf24;
-        }
+    .game-developer a:hover {
+      text-decoration: underline;
+    }
 
-        .play-button {
-            width: 100%;
-            padding: 8px;
-            background: #00875f;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
+    .game-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
 
-        .play-button:hover {
-            background: #015f43;
-        }
+    .star-icon {
+      color: #fbbf24;
+      cursor: pointer;
+    }
 
-        .play-button:active {
-            transform: scale(0.95);
-        }
+    .play-button {
+      width: 100%;
+      padding: 8px;
+      background: #00875f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: auto;
+    }
 
-        @media (max-width: 768px) {
-            .device-types,
-            .search-and-categories {
-                flex-wrap: wrap;
-            }
+    .play-button:hover {
+      background: #015f43;
+    }
 
-            .search-container {
-                max-width: none;
-            }
-        }
-    </style>
+    .play-button:active {
+      transform: scale(0.95);
+    }
+
+    @media (max-width: 768px) {
+      .device-types,
+      .categories {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <span class="material-icons">sports_esports</span>
-                <span>Popcorn Play</span>
-            </div>
-            <nav>
-                <button class="nav-button active">Games</button>
-                <button class="nav-button">Apps</button>
-                <button class="nav-button">Movies & TV</button>
-                <button class="nav-button">Books</button>
-                <button class="nav-button">Children</button>
-            </nav>
-            <div class="header-actions">
-                <span class="material-icons">search</span>
-                <span class="material-icons">help</span>
-                <div class="user-avatar">
-                    <span class="material-icons">person</span>
-                </div>
-            </div>
+  <header>
+    <div class="header-content">
+      <div class="logo">
+        <span class="material-icons">sports_esports</span>
+        <span>Snipe Play</span>
+      </div>
+      <nav>
+        <button class="nav-button active">Games</button>
+        <a href="/sitedata.html" class="nav-button">Apps</a>
+        <a href="https://ww2.m4uhd.tv/" class="nav-button">Movies</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-container">
+          <span class="material-icons search-icon">search</span>
+          <input type="search" class="search-input" placeholder="Search games..." id="searchInput">
         </div>
-    </header>
+        <button class="icon-button" onclick="showHelpNotice()">
+          <span class="material-icons">help</span>
+        </button>
+        <a href="/website-data/prx-177/svelte.html" class="home-icon">
+          <span class="material-icons">home</span>
+        </a>
+      </div>
+    </div>
+  </header>
 
-    <div class="container">
-        <div class="device-types">
-            <button class="device-button">
-                <span class="material-icons">computer</span>
-                Windows
-            </button>
-            <button class="device-button">
-                <span class="material-icons">smartphone</span>
-                Phone
-            </button>
-            <button class="device-button">
-                <span class="material-icons">tablet</span>
-                Tablet
-            </button>
-            <button class="device-button">
-                <span class="material-icons">tv</span>
-                TV
-            </button>
-            <button class="device-button">
-                <span class="material-icons">laptop_chromebook</span>
-                Chromebook
-            </button>
-            <button class="device-button">
-                <span class="material-icons">watch</span>
-                Watch
-            </button>
-        </div>
-
-        <div class="search-and-categories">
-            <div class="search-container">
-                <span class="material-icons search-icon">search</span>
-                <input type="search" class="search-input" placeholder="Search games..." id="searchInput">
-            </div>
-            <div class="categories" id="categories">
-                <button class="category-button active" data-category="All">All</button>
-                <button class="category-button" data-category="Action">Action</button>
-                <button class="category-button" data-category="Adventure">Adventure</button>
-                <button class="category-button" data-category="Arcade">Arcade</button>
-                <button class="category-button" data-category="Casual">Casual</button>
-                <button class="category-button" data-category="Puzzle">Puzzle</button>
-                <button class="category-button" data-category="Racing">Racing</button>
-                <button class="category-button" data-category="Sports">Sports</button>
-            </div>
-        </div>
-
-        <h2 class="section-title">Recommended for you</h2>
-        <div class="games-grid" id="gamesGrid"></div>
+  <div class="container">
+    <div class="device-types">
+      <button class="device-button active" data-device="Browser">
+        <span class="material-icons">computer</span>
+        Browser
+      </button>
+      <button class="device-button" data-device="Scratch">
+        <span class="material-icons">sports_esports</span>
+        Scratch
+      </button>
     </div>
 
-    <script>
-        const games = [
-            { id: 1, name: 'Slope', developer: 'Snipe Co.', rating: 4.5, category: "Arcade", image: 'https://slopeonline.online/upload/cache/upload/imgs/slope-game-v1-f260x260.png', url: 'https://storage.y8.com/y8-studio/unity_webgl/bitlaslt/slope_v_1_2_5/?key=9757549&value=80527' },
-            { id: 2, name: 'Among Us', developer: 'Innersloth LLC', rating: 4.3, category: "Action", image: 'https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec', url: 'https://f3.silvergames.com/m/among-us/' },
-            { id: 3, name: 'Monkey Mart', developer: 'Snipe Co.', rating: 4.4, category: "Casual", image: 'https://i.ytimg.com/vi/KsyQBXdkAuM/maxresdefault.jpg', url: 'https://walk.artitech.com/api/games/static/monkey-mart/index.html' },
-            { id: 4, name: 'Subway Surfers', developer: 'SYBO Games', rating: 4.6, category: "Action", image: 'https://subwaysurfers.com/media/f2ldlfpi/subwaysurfers_01.png', url: 'https://walk.artitech.com/api/games/static/subway-surfers/index.html' },
-            { id: 5, name: 'Back Rooms', developer: 'Snipe Co.', rating: 4.2, category: "Adventure", image: 'https://media.wired.com/photos/627b0c1fb6048c47d506c6c0/4:3/w_1384,h_1038,c_limit/Backrooms-Games.jpg', url: 'https://walk.artitech.com/api/games/static/backrooms/index.html' },
-            { id: 6, name: "Baldi's Basics", developer: 'Basically Games', rating: 4.1, category: "Adventure", image: 'https://play-lh.googleusercontent.com/EPV1TB4So1lB0DGrdCVExDpNU8ML67nd8OqBeoOIM-s6sDicxmDdPvCXD6n7LKevFl0', url: 'https://walk.artitech.com/api/games/static/baldis-basics/index.html' },
-            { id: 7, name: 'A Dance of Fire and Ice', developer: 'Snipe Co.', rating: 4.7, category: "Rhythm", image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/977950/capsule_616x353.jpg?t=1731342508', url: 'https://walk.artitech.com/api/games/static/a-dance-of-fire-and-ice/index.html' },
-            { id: 8, name: 'Tiny Fishing', developer: 'Snipe Co.', rating: 4.5, category: "Casual", image: 'https://www.coolmathgames.com/sites/default/files/TinyFishing_OG-logo.jpg', url: 'https://walk.artitech.com/api/games/static/tiny-fishing/index.html' },
-            { id: 9, name: 'Table Tennis World Tour', developer: 'Snipe Co.', rating: 4.3, category: "Sports", image: 'https://images.crazygames.com/table-tennis-world-tour_16x9/20230908041108/table-tennis-world-tour_16x9-cover?auto=format,compress&q=75&cs=strip', url: 'https://walk.artitech.com/api/games/static/table-tennis-world-tour/index.html' },
-            { id: 10, name: 'Daddish', developer: 'Thomas K. Young', rating: 4.8, category: "Platformer", image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1522950/header.jpg?t=1614538186', url: 'https://walk.artitech.com/api/games/static/dadish/index.html' },
-        ];
+    <div class="categories" id="categories">
+      <button class="category-button active" data-category="All">All</button>
+      <button class="category-button" data-category="Action">Action</button>
+      <button class="category-button" data-category="Adventure">Adventure</button>
+      <button class="category-button" data-category="Arcade">Arcade</button>
+      <button class="category-button" data-category="Casual">Casual</button>
+      <button class="category-button" data-category="Puzzle">Puzzle</button>
+      <button class="category-button" data-category="Sports">Sports</button>
+      <button class="category-button" data-category="Rhythm">Rhythm</button>
+      <button class="category-button" data-category="Platformer">Platformer</button>
+      <button class="category-button" data-category="Speedrun">Speedrun</button>
+      <button class="category-button" data-category="Scratch">Scratch</button>
+    </div>
 
-        function openGameInNewTab(url) {
-            const newTab = window.open('about:blank', '_blank');
-            if (newTab) {
-                newTab.document.write(`
-                    <html>
-                        <head>
-                            <title>Play Game</title>
-                            <style>
-                                body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-                                iframe { width: 100%; height: 100%; border: none; }
-                            </style>
-                        </head>
-                        <body>
-                            <iframe src="${url}" allowfullscreen></iframe>
-                        </body>
-                    </html>
-                `);
-                newTab.document.close();
+    <h2 class="section-title">Recommended for you</h2>
+    <div class="games-grid" id="gamesGrid"></div>
+  </div>
+
+  <script>
+    const initialGames = [
+      { id: 1, name: 'Slope', developer: 'Snipe Co.', rating: 4.5, category: "Arcade", image: 'https://slopeonline.online/upload/cache/upload/imgs/slope-game-v1-f260x260.png', url: 'https://storage.y8.com/y8-studio/unity_webgl/bitlaslt/slope_v_1_2_5/?key=9757549&value=80527' },
+      { id: 2, name: 'Among Us', developer: 'Innersloth LLC', rating: 4.3, category: "Puzzle", image: 'https://play-lh.googleusercontent.com/8ddL1kuoNUB5vUvgDVjYY3_6HwQcrg1K2fd_R8soD-e2QYj8fT9cfhfh3G0hnSruLKec', url: 'https://f3.silvergames.com/m/among-us/' },
+      { id: 3, name: 'Monkey Mart', developer: 'Snipe Co.', rating: 4.4, category: "Casual", image: 'https://i.ytimg.com/vi/KsyQBXdkAuM/maxresdefault.jpg', url: 'https://walk.artitech.com/api/games/static/monkey-mart/index.html' },
+      { id: 4, name: 'Subway Surfers', developer: 'SYBO Games', rating: 4.6, category: "Action", image: 'https://subwaysurfers.com/media/f2ldlfpi/subwaysurfers_01.png', url: 'https://walk.artitech.com/api/games/static/subway-surfers/index.html' },
+      { id: 5, name: 'Back Rooms', developer: 'Snipe Co.', rating: 4.2, category: "Adventure", image: 'https://media.wired.com/photos/627b0c1fb6048c47d506c6c0/4:3/w_1384,h_1038,c_limit/Backrooms-Games.jpg', url: 'https://walk.artitech.com/api/games/static/backrooms/index.html' },
+      { id: 6, name: "Baldi's Basics", developer: 'Basically Games', rating: 4.1, category: "Puzzle", image: 'https://play-lh.googleusercontent.com/EPV1TB4So1lB0DGrdCVExDpNU8ML67nd8OqBeoOIM-s6sDicxmDdPvCXD6n7LKevFl0', url: 'https://walk.artitech.com/api/games/static/baldis-basics/index.html' },
+      { id: 7, name: 'A Dance of Fire and Ice', developer: 'Snipe Co.', rating: 4.7, category: "Rhythm", image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/977950/capsule_616x353.jpg?t=1731342508', url: 'https://walk.artitech.com/api/games/static/a-dance-of-fire-and-ice/index.html' },
+      { id: 8, name: 'Tiny Fishing', developer: 'Snipe Co.', rating: 4.5, category: "Casual", image: 'https://www.coolmathgames.com/sites/default/files/TinyFishing_OG-logo.jpg', url: 'https://walk.artitech.com/api/games/static/tiny-fishing/index.html' },
+      { id: 9, name: 'Table Tennis World Tour', developer: 'Snipe Co.', rating: 4.3, category: "Sports", image: 'https://images.crazygames.com/table-tennis-world-tour_16x9/20230908041108/table-tennis-world-tour_16x9-cover?auto=format,compress&q=75&cs=strip', url: 'https://walk.artitech.com/api/games/static/table-tennis-world-tour/index.html' },
+      { id: 10, name: 'Daddish', developer: 'Thomas K. Young', rating: 4.8, category: "Puzzle", image: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1522950/header.jpg?t=1614538186', url: 'https://walk.artitech.com/api/games/static/dadish/index.html' },
+      { id: 11, name: 'Popcorn Client', developer: 'Snipe Co.', rating: 4.9, category: "Speedrun", image: 'https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Buzzy-Bees_1280x768.jpg', url: 'https://gitlab.com/snipeco/popcornclient/-/raw/main/Astra1.3__1_.html' },
+      { id: 12, name: 'Dodge', developer: 'TiggerTheCreator_13', rating: 4.0, category: "Scratch", image: '/wp-content/Screenshot%202024-11-17%2017.45.22.png', url: '/wp-content/Dodge!%20The%20game.html' },
+      { id: 13, name: 'Dungeon Escape', developer: 'TiggerTheCreator_13', rating: 4.2, category: "Scratch", image: '/wp-content/Screenshot%202024-11-17%2017.45.08.png', url: '/wp-content/Dungeon%20escape!%20V4!.html' },
+    ];
+
+    let games = JSON.parse(localStorage.getItem('games')) || initialGames;
+
+    function openGameInNewTab(url) {
+      const newTab = window.open('about:blank', '_blank');
+      if (newTab) {
+        newTab.document.write(`
+          <html>
+            <head>
+              <title>Play Game</title>
+              <style>
+                body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+                iframe { width: 100%; height: 100%; border: none; }
+              </style>
+            </head>
+            <body>
+              <iframe src="${url}" allowfullscreen></iframe>
+            </body>
+          </html>
+        `);
+        newTab.document.close();
+      }
+    }
+
+    function renderGames(filteredGames) {
+      const gamesGrid = document.getElementById('gamesGrid');
+      gamesGrid.innerHTML = '';
+
+      filteredGames.forEach(game => {
+        const gameCard = document.createElement('div');
+        gameCard.className = 'game-card';
+        gameCard.innerHTML = `
+          <img src="${game.image}" alt="${game.name}" class="game-image">
+          <div class="game-info">
+            <h3 class="game-name">${game.name}</h3>
+            ${game.category === "Scratch" 
+              ? `<p class="game-developer"><a href="https://scratch.mit.edu/users/TiggerTheCreator_13/" target="_blank">${game.developer}</a></p>`
+              : `<p class="game-developer">${game.developer}</p>`
             }
-        }
+            <div class="game-rating">
+              ${[1, 2, 3, 4, 5].map(star => `
+                <span class="material-icons star-icon" style="color: ${star <= game.rating ? '#fbbf24' : '#d1d5db'}" onclick="rateGame(${game.id}, ${star})">star</span>
+              `).join('')}
+              <span>${game.rating.toFixed(1)}</span>
+            </div>
+            <button class="play-button" onclick="openGameInNewTab('${game.url}')">Play Game</button>
+          </div>
+        `;
+        gamesGrid.appendChild(gameCard);
+      });
+    }
 
-        function renderGames(filteredGames) {
-            const gamesGrid = document.getElementById('gamesGrid');
-            gamesGrid.innerHTML = '';
+    function filterGames() {
+      const selectedCategory = document.querySelector('.category-button.active').dataset.category;
+      const selectedDevice = document.querySelector('.device-button.active').dataset.device;
+      const searchQuery = document.getElementById('searchInput').value.toLowerCase();
 
-            filteredGames.forEach(game => {
-                const gameCard = document.createElement('div');
-                gameCard.className = 'game-card';
-                gameCard.innerHTML = `
-                    <img src="${game.image}" alt="${game.name}" class="game-image">
-                    <div class="game-info">
-                        <h3 class="game-name">${game.name}</h3>
-                        <p class="game-developer">${game.developer}</p>
-                        <div class="game-rating">
-                            <span class="material-icons star-icon">star</span>
-                            <span>${game.rating}</span>
-                        </div>
-                        <button class="play-button" onclick="openGameInNewTab('${game.url}')">Play Game</button>
-                    </div>
-                `;
-                gamesGrid.appendChild(gameCard);
-            });
-        }
+      const filteredGames = games.filter(game => {
+        const matchesCategory = selectedCategory === "All" || game.category === selectedCategory;
+        const matchesDevice = selectedDevice === "Scratch" ? game.category === "Scratch" : game.category !== "Scratch";
+        const matchesSearch = game.name.toLowerCase().includes(searchQuery) ||
+                              game.developer.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesDevice && matchesSearch;
+      });
 
-        // Initial render
-        renderGames(games);
+      renderGames(filteredGames);
+    }
 
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            const searchQuery = e.target.value.toLowerCase();
-            const activeCategory = document.querySelector('.category-button.active').dataset.category;
-            
-            const filteredGames = games.filter(game => {
-                const matchesCategory = activeCategory === 'All' || game.category === activeCategory;
-                const matchesSearch = game.name.toLowerCase().includes(searchQuery) ||
-                                   game.developer.toLowerCase().includes(searchQuery);
-                return matchesCategory && matchesSearch;
-            });
-            
-            renderGames(filteredGames);
-        });
+    // Initial render
+    renderGames(games);
 
-        // Category filtering
-        const categories = document.getElementById('categories');
-        categories.addEventListener('click', (e) => {
-            if (e.target.classList.contains('category-button')) {
-                // Update active state
-                document.querySelectorAll('.category-button').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                e.target.classList.add('active');
+    // Category filtering
+    const categories = document.getElementById('categories');
+    categories.addEventListener('click', (e) => {
+      if (e.target.classList.contains('category-button')) {
+        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        filterGames();
+      }
+    });
 
-                const category = e.target.dataset.category;
-                const searchQuery = searchInput.value.toLowerCase();
-                
-                const filteredGames = games.filter(game => {
-                    const matchesCategory = category === 'All' || game.category === category;
-                    const matchesSearch = game.name.toLowerCase().includes(searchQuery) ||
-                                       game.developer.toLowerCase().includes(searchQuery);
-                    return matchesCategory && matchesSearch;
-                });
-                
-                renderGames(filteredGames);
-            }
-        });
-    </script>
+    // Device filtering
+    const deviceTypes = document.querySelector('.device-types');
+    deviceTypes.addEventListener('click', (e) => {
+      if (e.target.classList.contains('device-button')) {
+        document.querySelectorAll('.device-button').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        filterGames();
+      }
+    });
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', filterGames);
+
+    function showHelpNotice() {
+      alert("To play games, find the game you want and click the green button below. The game will open up in a new tab and you can play it!");
+    }
+
+    function rateGame(id, newRating) {
+      games = games.map(game => game.id === id ? { ...game, rating: newRating } : game);
+      localStorage.setItem('games', JSON.stringify(games));
+      filterGames();
+    }
+  </script>
 </body>
 </html>
